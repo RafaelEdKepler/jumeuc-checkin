@@ -29,5 +29,5 @@ export default async function Page() {
         setLoading(false)
     }
 
-    return <CheckinClient initialAttendees={attendees} />;
+    return <CheckinClient initialAttendees={attendees} loading={loading} />;
 }
