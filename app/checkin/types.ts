@@ -6,5 +6,5 @@ export type Attendee = {
 
 export type CheckinClientProps = {
     initialAttendees: string[];
-    loading?: boolean;
+    loading: boolean;
 };
