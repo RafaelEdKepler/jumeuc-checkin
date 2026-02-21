@@ -31,7 +31,7 @@ export default function CheckinClient({ initialAttendees, loading }: CheckinClie
 
     return (
         <>
-            {!loading && <Portal />}
+            {loading && <Portal />}
             <div className="min-h-screen bg-linear-to-br from-slate-100 to-slate-200 flex items-center justify-center p-6"> 
                 <Card className="w-full max-w-2xl shadow-xl rounded-2xl"> 
                     <CardContent className="p-8 space-y-6">
