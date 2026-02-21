@@ -1,8 +1,9 @@
 import { getAttendees } from "@/lib/db";
 import CheckinClient from "./checkin-client";
-import { use } from "react";
+import { use, useState } from "react";
 
 export default async function Page() {
+    const [loading, setLoading] = useState(true);
     const res = await fetch('https://biblia-api.fly.dev/cadastro', { 
         method: 'POST', 
         headers: { 
@@ -16,16 +17,16 @@ export default async function Page() {
                 perfil: "Programação" 
             }
         ) 
-    }).then(res => res.json()).then(console.log).catch(console.error);
-
-    console.log(res)
+    }).then(res => res.json()).then(console.log).catch(console.error);    
 
     let attendees: string[] = [];
 
-    try {
+    try {        
         attendees = await getAttendees();
     } catch (error) {
         console.error("Error fetching attendees:", error);
+    } finally {
+        setLoading(false)
     }
 
     return <CheckinClient initialAttendees={attendees} />;
