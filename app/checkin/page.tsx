@@ -16,7 +16,9 @@ export default async function Page() {
                 perfil: "Programação" 
             }
         ) 
-    }).then(res => res.json()).then(console.log).catch(console.error);    
+    }).then(res => res.json()).then(console.log).catch(console.error);
+
+    alert(JSON.stringify(res))
 
     let attendees: string[] = [];
 
