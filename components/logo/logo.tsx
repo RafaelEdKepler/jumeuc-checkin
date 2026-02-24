@@ -1,6 +1,7 @@
 import Image from "next/image";
+import LogoProps from "./types";
 
-export default function LogoComponent() {
+export default function LogoComponent({ verse } : LogoProps) {
     return (
         <div className="flex flex-col items-center space-y-2">
             <div className="w-24 h-24 rounded-full bg-slate-300 flex items-center justify-center text-2xl font-bold text-slate-700">
@@ -9,6 +10,7 @@ export default function LogoComponent() {
             <h1 className="text-2xl font-semibold text-center">
                 Check-in JUMEUC TCHÊ
             </h1>
+            <h2 className="text-1xl font-bold text-center">{verse}</h2>
             <p className="text-sm text-muted-foreground text-center">
                 Registre sua presença no encontro de hoje ✨
             </p>

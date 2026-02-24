@@ -1,5 +1,6 @@
 import { getAttendees } from "@/lib/db";
 import CheckinClient from "./checkin-client";
+import getBibleVerse from "../utils/get-verse";
 
 export const metadata = {
     title: "Jumeuc - Check-in",
@@ -11,6 +12,8 @@ export default async function Page() {
 
     let attendees: string[] = [];
 
+    const verseInfo = getBibleVerse();    
+
     try {        
         attendees = await getAttendees();
     } catch (error) {
@@ -19,5 +22,5 @@ export default async function Page() {
         loading = false;
     }
 
-    return <CheckinClient initialAttendees={attendees} loading={loading} />;
+    return <CheckinClient initialAttendees={attendees} loading={loading} verse={verseInfo}/>;
 }
