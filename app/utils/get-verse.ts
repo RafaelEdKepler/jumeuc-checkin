@@ -1,4 +1,5 @@
-import { BibleBook } from '@/lib/types';
+
+import { BibleBook } from '@/types/types';
 import rawBible from '../../lib/nvi.json'
 
 function getDailySeed() {
