@@ -1,3 +1,5 @@
+[Jumeuc Check-in]
+
 Sistema de check-in para a juventude da igreja, desenvolvido com foco em simplicidade, organização e arquitetura moderna.
 
 Além do controle de presença, o sistema exibe automaticamente um versículo bíblico diferente por dia, sem necessidade de banco de dados para essa funcionalidade.
@@ -19,13 +21,15 @@ Além do controle de presença, o sistema exibe automaticamente um versículo b�
 ✅ Arquitetura alinhada ao React 19
 
 🏗️ Stack Tecnológica
-Next.js (App Router)
-React 19
-TypeScript
-Prisma ORM
-Neon (PostgreSQL Serverless)
-Shadcn/UI
-TailwindCSS
+
+- Next.js (App Router);
+- React 19;
+- TypeScript;
+- Prisma ORM;
+- Neon (PostgreSQL Serverless);
+- Shadcn/UI;
+- TailwindCSS;
+
 📖 Versículo Diário
 
 O sistema exibe automaticamente um versículo diferente a cada dia.
