@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Sistema de check-in para a juventude da igreja, desenvolvido com foco em simplicidade, organização e arquitetura moderna.
 
-## Getting Started
+Além do controle de presença, o sistema exibe automaticamente um versículo bíblico diferente por dia, sem necessidade de banco de dados para essa funcionalidade.
 
-First, run the development server:
+✨ Funcionalidades
 
-```bash
+✅ Registro de presença
+
+✅ Persistência com Prisma + Neon (PostgreSQL)
+
+✅ UI moderna com Shadcn
+
+✅ Versículo bíblico diário automático
+
+✅ Server Components
+
+✅ Tipagem forte com TypeScript
+
+✅ Arquitetura alinhada ao React 19
+
+🏗️ Stack Tecnológica
+Next.js (App Router)
+React 19
+TypeScript
+Prisma ORM
+Neon (PostgreSQL Serverless)
+Shadcn/UI
+TailwindCSS
+📖 Versículo Diário
+
+O sistema exibe automaticamente um versículo diferente a cada dia.
+
+Como funciona?
+
+Base bíblica armazenada em nvi.json
+
+Geração de seed determinístico baseado no dia do ano
+
+Pseudo-aleatoriedade determinística
+
+Mesmo versículo para todos os usuários durante o dia
+
+Atualização automática à meia-noite
+
+Sem banco.
+Sem estado persistido.
+Apenas cálculo determinístico.
+
+📂 Estrutura do Projeto
+.
+├── app/
+│   ├── checkin/
+│   ├── utils/
+│   └── layout.tsx
+├── lib/
+│   ├── prisma.ts
+│   └── nvi.json
+├── types/
+├── prisma/
+│   └── schema.prisma
+└── README.md
+⚙️ Instalação
+1️⃣ Clone o repositório
+git clone https://github.com/seu-usuario/jumeuc-checkin.git
+cd jumeuc-checkin
+2️⃣ Instale as dependências
+npm install
+
+ou
+
+pnpm install
+3️⃣ Configure as variáveis de ambiente
+
+Crie um arquivo .env:
+
+DATABASE_URL="sua-url-do-neon"
+4️⃣ Execute as migrations
+npx prisma migrate dev
+5️⃣ Rode o projeto
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000
+🧠 Decisões Arquiteturais
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Uso de Server Components para reduzir bundle no client
 
-## Learn More
+Versículo diário determinístico sem persistência
 
-To learn more about Next.js, take a look at the following resources:
+Separação clara entre domínio, utilidades e UI
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Prisma como camada de abstração do banco
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Banco serverless com Neon
 
-## Deploy on Vercel
+🚀 Próximas Evoluções
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ Dashboard administrativo
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ Métricas de presença
+
+ Autenticação por perfil
+
+ Exportação de relatórios
+
+ Histórico de eventos
+
+📜 Licença
+
+Projeto desenvolvido para uso interno da juventude.
