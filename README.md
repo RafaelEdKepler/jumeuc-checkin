@@ -47,64 +47,77 @@ Sem estado persistido.
 Apenas cálculo determinístico.
 
 📂 Estrutura do Projeto
+
 .
+
 ├── app/
+
 │   ├── checkin/
+
 │   ├── utils/
+
 │   └── layout.tsx
+
 ├── lib/
+
 │   ├── prisma.ts
+
 │   └── nvi.json
+
 ├── types/
+
 ├── prisma/
+
 │   └── schema.prisma
+
 └── README.md
+
+
 ⚙️ Instalação
+
 1️⃣ Clone o repositório
-git clone https://github.com/seu-usuario/jumeuc-checkin.git
-cd jumeuc-checkin
+
+``git clone https://github.com/seu-usuario/jumeuc-checkin.git
+cd jumeuc-checkin``
+
 2️⃣ Instale as dependências
-npm install
+
+``npm install``
 
 ou
 
-pnpm install
+``pnpm install``
+
 3️⃣ Configure as variáveis de ambiente
 
 Crie um arquivo .env:
 
-DATABASE_URL="sua-url-do-neon"
+``DATABASE_URL="sua-url-do-neon"``
+
 4️⃣ Execute as migrations
-npx prisma migrate dev
+
+``npx prisma migrate dev``
+``npx prisma generate``
+
 5️⃣ Rode o projeto
-npm run dev
 
-Acesse:
+``npm run dev``
 
-http://localhost:3000
+Acesse: http://localhost:3000
+
 🧠 Decisões Arquiteturais
 
-Uso de Server Components para reduzir bundle no client
-
-Versículo diário determinístico sem persistência
-
-Separação clara entre domínio, utilidades e UI
-
-Prisma como camada de abstração do banco
-
-Banco serverless com Neon
+- Uso de Server Components para reduzir bundle no client;
+- Versículo diário determinístico sem persistência;
+- Separação clara entre domínio, utilidades e UI;
+- Prisma como camada de abstração do banco;
+- Banco serverless com Neon;
 
 🚀 Próximas Evoluções
 
- Dashboard administrativo
-
- Métricas de presença
-
- Autenticação por perfil
-
- Exportação de relatórios
-
- Histórico de eventos
+ - Métricas de presença;
+ - Autenticação por perfil de Liderança;
+ - Histórico de eventos
 
 📜 Licença
 
