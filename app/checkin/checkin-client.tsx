@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useOptimistic, useState, useTransition } from "react";
+import { useOptimistic, useTransition } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import LogoComponent from "@/components/logo/logo";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ import { checkIn } from "./actions";
 import { CheckinClientProps } from "./types";
 import Portal from "@/components/portal/portal";
 
-export default function CheckinClient({ initialAttendees, loading }: CheckinClientProps) {    
+export default function CheckinClient({ initialAttendees, loading, verse }: CheckinClientProps) {    
     
     const [isPending, startTransition] = useTransition();
 
@@ -37,7 +37,7 @@ export default function CheckinClient({ initialAttendees, loading }: CheckinClie
             <div className="min-h-screen bg-linear-to-br from-slate-100 to-slate-200 flex items-center justify-center p-6"> 
                 <Card className="w-full max-w-2xl shadow-xl rounded-2xl"> 
                     <CardContent className="p-8 space-y-6">
-                        <LogoComponent /> 
+                        <LogoComponent verse={verse}/> 
                         <form className="flex gap-2" action={(formData) => startTransition(() => handleCheckIn(formData))} > 
                             <Input placeholder="Digite seu nome" name="name" /> 
                             <Button type="submit">Confirmar</Button> 
