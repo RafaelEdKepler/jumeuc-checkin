@@ -1,6 +1,6 @@
 "use server";
 
-import { addAttendee } from "@/lib/db";
+import { addAttendee, confirmAttendee } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
 export async function checkIn(formData: FormData) {
@@ -11,4 +11,9 @@ export async function checkIn(formData: FormData) {
   await addAttendee(name);
 
   revalidatePath("/checkin");
+}
+
+export async function confirmAttendeeAction(confirmed : number[], notConfirmed : number[]) {
+  await confirmAttendee(confirmed, notConfirmed)
+  revalidatePath("/confirm");
 }
