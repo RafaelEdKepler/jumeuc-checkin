@@ -1,8 +1,4 @@
-export type Attendee = {
-  id: number;
-  name: string;
-  createdAt: Date;
-};
+import { Attendee } from "../generated/prisma";
 
 export type CheckinClientProps = {
     initialAttendees: string[];

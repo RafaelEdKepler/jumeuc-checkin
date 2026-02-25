@@ -1,4 +1,4 @@
-import { getAttendees } from "@/lib/db";
+import { getAllAttendees } from "@/lib/db";
 import CheckinClient from "./checkin-client";
 import getBibleVerse from "../utils/get-verse";
 
@@ -15,7 +15,7 @@ export default async function Page() {
     const verseInfo = getBibleVerse();    
 
     try {        
-        attendees = await getAttendees();
+        attendees = await getAllAttendees();
     } catch (error) {
         console.error("Error fetching attendees:", error);
     } finally {
