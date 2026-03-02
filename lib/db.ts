@@ -30,23 +30,14 @@ export async function addAttendee(name: string) {
 }
 
 export async function getAttendeesForDate(date: Date): Promise<Attendee[]> {
-  const startOfDay = new Date(Date.UTC(
-    date.getUTCFullYear(),
-    date.getUTCMonth(),
-    date.getUTCDate()
-  ));
-
-  const endOfDay = new Date(Date.UTC(
-    date.getUTCFullYear(),
-    date.getUTCMonth(),
-    date.getUTCDate() + 1
-  ));
+  const startOfThisDay = fromZonedTime(startOfDay(date), timeZone);
+  const endOfThisDay = fromZonedTime(endOfDay(date), timeZone);
 
   const attendees = await prisma.attendee.findMany({
     where: {
       createdAt: {
-        gte: startOfDay,
-        lt: endOfDay,
+        gte: startOfThisDay,
+        lt: endOfThisDay,
       }
     },
     orderBy: { createdAt: "asc" },
