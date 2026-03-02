@@ -1,14 +1,16 @@
 "use server"
 
 import { Attendee } from "@/app/generated/prisma";
+import { fromZonedTime } from "date-fns-tz"
 import prisma from "./prisma";
+import { endOfDay, startOfDay } from "date-fns";
+
+const timeZone = "America/Sao_Paulo";
 
 export async function getAllAttendees(): Promise<string[]> {
-    const startOfToday = new Date();
-    startOfToday.setHours(0, 0, 0, 0);
-
-    const endOfToday = new Date();
-    endOfToday.setHours(23, 59, 59, 999);
+    const now = new Date();
+    const startOfToday = fromZonedTime(startOfDay(now), timeZone);
+    const endOfToday = fromZonedTime(endOfDay(now), timeZone);
     const response = await prisma.attendee.findMany({
         where: { 
             createdAt: {
