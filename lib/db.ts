@@ -3,7 +3,7 @@
 import { Attendee } from "@/app/generated/prisma";
 import { fromZonedTime } from "date-fns-tz"
 import prisma from "./prisma";
-import { endOfDay, startOfDay } from "date-fns";
+import { addYears, endOfDay, startOfDay, startOfYear } from "date-fns";
 
 const timeZone = "America/Sao_Paulo";
 
@@ -61,15 +61,9 @@ export async function confirmAttendee(confirmed: number[], notConfirmed: number[
 
 }
 
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
 export async function getDates(year: number) {    
-  await delay(2000) // ⏳ simula 2 segundos
-
-  const start = new Date(year, 0, 1)
-  const end = new Date(year + 1, 0, 1)
+  const start = startOfYear(new Date(year, 0, 1))
+  const end = addYears(start, 1)
 
   return await prisma.calendar.findMany({
     where: {
