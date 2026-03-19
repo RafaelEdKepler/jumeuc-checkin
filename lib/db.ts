@@ -47,8 +47,7 @@ export async function getAttendeesForDate(date: Date): Promise<Attendee[]> {
 }
 
 export async function confirmAttendee(confirmed: number[], notConfirmed: number[]) {
-    
-    console.log(confirmed, notConfirmed)
+        
     await prisma.$transaction([
         prisma.attendee.updateMany({
             where: {id: { in: confirmed }},
@@ -60,4 +59,32 @@ export async function confirmAttendee(confirmed: number[], notConfirmed: number[
         }),
     ])
 
+}
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+export async function getDates(year: number) {    
+  await delay(2000) // ⏳ simula 2 segundos
+
+  const start = new Date(year, 0, 1)
+  const end = new Date(year + 1, 0, 1)
+
+  return await prisma.calendar.findMany({
+    where: {
+      date: {
+        gte: start,
+        lt: end
+      }
+    }
+  })
+}
+
+export async function saveDates(dates: Date[]) {    
+  await prisma.calendar.createMany({
+    data: dates.map((date) => ({
+      date,
+    })),
+  })
 }

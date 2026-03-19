@@ -129,6 +129,13 @@ exports.Prisma.AttendeeScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CalendarScalarFieldEnum = {
+  id: 'id',
+  leader: 'leader',
+  date: 'date',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -146,7 +153,8 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  Attendee: 'Attendee'
+  Attendee: 'Attendee',
+  Calendar: 'Calendar'
 };
 
 /**

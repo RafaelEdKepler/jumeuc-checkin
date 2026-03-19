@@ -9,6 +9,7 @@ import ListComponent from "@/components/list/list";
 import { checkIn } from "./actions";
 import { CheckinClientProps } from "./types";
 import Portal from "@/components/portal/portal";
+import LayoutComponent from "@/components/layout/layout";
 
 export default function CheckinClient({ initialAttendees, loading, verse }: CheckinClientProps) {    
     
@@ -34,7 +35,7 @@ export default function CheckinClient({ initialAttendees, loading, verse }: Chec
     return (
         <>
             {isPending && <Portal />}
-            <div className="min-h-screen bg-linear-to-br from-slate-100 to-slate-200 flex items-center justify-center p-6"> 
+            <LayoutComponent>
                 <Card className="w-full max-w-2xl shadow-xl rounded-2xl"> 
                     <CardContent className="p-8 space-y-6">
                         <LogoComponent verse={verse}/> 
@@ -45,7 +46,7 @@ export default function CheckinClient({ initialAttendees, loading, verse }: Chec
                         <ListComponent attendees={optimisticAttendees} /> 
                     </CardContent> 
                 </Card> 
-            </div>
+            </LayoutComponent>
         </>
     );
 }

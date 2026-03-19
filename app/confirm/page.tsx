@@ -1,6 +1,7 @@
 import { getAttendeesForDate } from "@/lib/db";
 import ConfirmClient from "./confirm-client";
-import { use } from "react";
+import { Suspense } from "react";
+import Portal from "@/components/portal/portal";
 
 export const metadata = {
     title: "Jumeuc - Liderança",
@@ -12,6 +13,8 @@ export default async function ConfirmPage() {
     const attendees = await getAttendeesForDate(new Date());        
 
     return (
-        <ConfirmClient attendees={attendees}/>
+        <Suspense fallback={<Portal />}>
+            <ConfirmClient attendees={attendees}/>
+        </Suspense>
     )
 }

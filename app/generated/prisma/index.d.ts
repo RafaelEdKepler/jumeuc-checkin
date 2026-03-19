@@ -18,6 +18,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type Attendee = $Result.DefaultSelection<Prisma.$AttendeePayload>
+/**
+ * Model Calendar
+ * 
+ */
+export type Calendar = $Result.DefaultSelection<Prisma.$CalendarPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -145,6 +150,16 @@ export class PrismaClient<
     * ```
     */
   get attendee(): Prisma.AttendeeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.calendar`: Exposes CRUD operations for the **Calendar** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Calendars
+    * const calendars = await prisma.calendar.findMany()
+    * ```
+    */
+  get calendar(): Prisma.CalendarDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -579,7 +594,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Attendee: 'Attendee'
+    Attendee: 'Attendee',
+    Calendar: 'Calendar'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -595,7 +611,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "attendee"
+      modelProps: "attendee" | "calendar"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -670,6 +686,80 @@ export namespace Prisma {
           count: {
             args: Prisma.AttendeeCountArgs<ExtArgs>
             result: $Utils.Optional<AttendeeCountAggregateOutputType> | number
+          }
+        }
+      }
+      Calendar: {
+        payload: Prisma.$CalendarPayload<ExtArgs>
+        fields: Prisma.CalendarFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CalendarFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CalendarFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarPayload>
+          }
+          findFirst: {
+            args: Prisma.CalendarFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CalendarFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarPayload>
+          }
+          findMany: {
+            args: Prisma.CalendarFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarPayload>[]
+          }
+          create: {
+            args: Prisma.CalendarCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarPayload>
+          }
+          createMany: {
+            args: Prisma.CalendarCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CalendarCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarPayload>[]
+          }
+          delete: {
+            args: Prisma.CalendarDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarPayload>
+          }
+          update: {
+            args: Prisma.CalendarUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarPayload>
+          }
+          deleteMany: {
+            args: Prisma.CalendarDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CalendarUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CalendarUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarPayload>[]
+          }
+          upsert: {
+            args: Prisma.CalendarUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CalendarPayload>
+          }
+          aggregate: {
+            args: Prisma.CalendarAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCalendar>
+          }
+          groupBy: {
+            args: Prisma.CalendarGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CalendarGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CalendarCountArgs<ExtArgs>
+            result: $Utils.Optional<CalendarCountAggregateOutputType> | number
           }
         }
       }
@@ -782,6 +872,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     attendee?: AttendeeOmit
+    calendar?: CalendarOmit
   }
 
   /* Types for Logging */
@@ -1905,6 +1996,1022 @@ export namespace Prisma {
 
 
   /**
+   * Model Calendar
+   */
+
+  export type AggregateCalendar = {
+    _count: CalendarCountAggregateOutputType | null
+    _avg: CalendarAvgAggregateOutputType | null
+    _sum: CalendarSumAggregateOutputType | null
+    _min: CalendarMinAggregateOutputType | null
+    _max: CalendarMaxAggregateOutputType | null
+  }
+
+  export type CalendarAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type CalendarSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type CalendarMinAggregateOutputType = {
+    id: number | null
+    leader: string | null
+    date: Date | null
+    createdAt: Date | null
+  }
+
+  export type CalendarMaxAggregateOutputType = {
+    id: number | null
+    leader: string | null
+    date: Date | null
+    createdAt: Date | null
+  }
+
+  export type CalendarCountAggregateOutputType = {
+    id: number
+    leader: number
+    date: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type CalendarAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type CalendarSumAggregateInputType = {
+    id?: true
+  }
+
+  export type CalendarMinAggregateInputType = {
+    id?: true
+    leader?: true
+    date?: true
+    createdAt?: true
+  }
+
+  export type CalendarMaxAggregateInputType = {
+    id?: true
+    leader?: true
+    date?: true
+    createdAt?: true
+  }
+
+  export type CalendarCountAggregateInputType = {
+    id?: true
+    leader?: true
+    date?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type CalendarAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Calendar to aggregate.
+     */
+    where?: CalendarWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Calendars to fetch.
+     */
+    orderBy?: CalendarOrderByWithRelationInput | CalendarOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CalendarWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Calendars from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Calendars.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Calendars
+    **/
+    _count?: true | CalendarCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CalendarAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CalendarSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CalendarMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CalendarMaxAggregateInputType
+  }
+
+  export type GetCalendarAggregateType<T extends CalendarAggregateArgs> = {
+        [P in keyof T & keyof AggregateCalendar]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCalendar[P]>
+      : GetScalarType<T[P], AggregateCalendar[P]>
+  }
+
+
+
+
+  export type CalendarGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CalendarWhereInput
+    orderBy?: CalendarOrderByWithAggregationInput | CalendarOrderByWithAggregationInput[]
+    by: CalendarScalarFieldEnum[] | CalendarScalarFieldEnum
+    having?: CalendarScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CalendarCountAggregateInputType | true
+    _avg?: CalendarAvgAggregateInputType
+    _sum?: CalendarSumAggregateInputType
+    _min?: CalendarMinAggregateInputType
+    _max?: CalendarMaxAggregateInputType
+  }
+
+  export type CalendarGroupByOutputType = {
+    id: number
+    leader: string | null
+    date: Date
+    createdAt: Date
+    _count: CalendarCountAggregateOutputType | null
+    _avg: CalendarAvgAggregateOutputType | null
+    _sum: CalendarSumAggregateOutputType | null
+    _min: CalendarMinAggregateOutputType | null
+    _max: CalendarMaxAggregateOutputType | null
+  }
+
+  type GetCalendarGroupByPayload<T extends CalendarGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CalendarGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CalendarGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CalendarGroupByOutputType[P]>
+            : GetScalarType<T[P], CalendarGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CalendarSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    leader?: boolean
+    date?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["calendar"]>
+
+  export type CalendarSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    leader?: boolean
+    date?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["calendar"]>
+
+  export type CalendarSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    leader?: boolean
+    date?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["calendar"]>
+
+  export type CalendarSelectScalar = {
+    id?: boolean
+    leader?: boolean
+    date?: boolean
+    createdAt?: boolean
+  }
+
+  export type CalendarOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leader" | "date" | "createdAt", ExtArgs["result"]["calendar"]>
+
+  export type $CalendarPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Calendar"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      leader: string | null
+      date: Date
+      createdAt: Date
+    }, ExtArgs["result"]["calendar"]>
+    composites: {}
+  }
+
+  type CalendarGetPayload<S extends boolean | null | undefined | CalendarDefaultArgs> = $Result.GetResult<Prisma.$CalendarPayload, S>
+
+  type CalendarCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CalendarFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CalendarCountAggregateInputType | true
+    }
+
+  export interface CalendarDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Calendar'], meta: { name: 'Calendar' } }
+    /**
+     * Find zero or one Calendar that matches the filter.
+     * @param {CalendarFindUniqueArgs} args - Arguments to find a Calendar
+     * @example
+     * // Get one Calendar
+     * const calendar = await prisma.calendar.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CalendarFindUniqueArgs>(args: SelectSubset<T, CalendarFindUniqueArgs<ExtArgs>>): Prisma__CalendarClient<$Result.GetResult<Prisma.$CalendarPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Calendar that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CalendarFindUniqueOrThrowArgs} args - Arguments to find a Calendar
+     * @example
+     * // Get one Calendar
+     * const calendar = await prisma.calendar.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CalendarFindUniqueOrThrowArgs>(args: SelectSubset<T, CalendarFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CalendarClient<$Result.GetResult<Prisma.$CalendarPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Calendar that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarFindFirstArgs} args - Arguments to find a Calendar
+     * @example
+     * // Get one Calendar
+     * const calendar = await prisma.calendar.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CalendarFindFirstArgs>(args?: SelectSubset<T, CalendarFindFirstArgs<ExtArgs>>): Prisma__CalendarClient<$Result.GetResult<Prisma.$CalendarPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Calendar that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarFindFirstOrThrowArgs} args - Arguments to find a Calendar
+     * @example
+     * // Get one Calendar
+     * const calendar = await prisma.calendar.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CalendarFindFirstOrThrowArgs>(args?: SelectSubset<T, CalendarFindFirstOrThrowArgs<ExtArgs>>): Prisma__CalendarClient<$Result.GetResult<Prisma.$CalendarPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Calendars that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Calendars
+     * const calendars = await prisma.calendar.findMany()
+     * 
+     * // Get first 10 Calendars
+     * const calendars = await prisma.calendar.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const calendarWithIdOnly = await prisma.calendar.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CalendarFindManyArgs>(args?: SelectSubset<T, CalendarFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CalendarPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Calendar.
+     * @param {CalendarCreateArgs} args - Arguments to create a Calendar.
+     * @example
+     * // Create one Calendar
+     * const Calendar = await prisma.calendar.create({
+     *   data: {
+     *     // ... data to create a Calendar
+     *   }
+     * })
+     * 
+     */
+    create<T extends CalendarCreateArgs>(args: SelectSubset<T, CalendarCreateArgs<ExtArgs>>): Prisma__CalendarClient<$Result.GetResult<Prisma.$CalendarPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Calendars.
+     * @param {CalendarCreateManyArgs} args - Arguments to create many Calendars.
+     * @example
+     * // Create many Calendars
+     * const calendar = await prisma.calendar.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CalendarCreateManyArgs>(args?: SelectSubset<T, CalendarCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Calendars and returns the data saved in the database.
+     * @param {CalendarCreateManyAndReturnArgs} args - Arguments to create many Calendars.
+     * @example
+     * // Create many Calendars
+     * const calendar = await prisma.calendar.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Calendars and only return the `id`
+     * const calendarWithIdOnly = await prisma.calendar.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CalendarCreateManyAndReturnArgs>(args?: SelectSubset<T, CalendarCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CalendarPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Calendar.
+     * @param {CalendarDeleteArgs} args - Arguments to delete one Calendar.
+     * @example
+     * // Delete one Calendar
+     * const Calendar = await prisma.calendar.delete({
+     *   where: {
+     *     // ... filter to delete one Calendar
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CalendarDeleteArgs>(args: SelectSubset<T, CalendarDeleteArgs<ExtArgs>>): Prisma__CalendarClient<$Result.GetResult<Prisma.$CalendarPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Calendar.
+     * @param {CalendarUpdateArgs} args - Arguments to update one Calendar.
+     * @example
+     * // Update one Calendar
+     * const calendar = await prisma.calendar.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CalendarUpdateArgs>(args: SelectSubset<T, CalendarUpdateArgs<ExtArgs>>): Prisma__CalendarClient<$Result.GetResult<Prisma.$CalendarPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Calendars.
+     * @param {CalendarDeleteManyArgs} args - Arguments to filter Calendars to delete.
+     * @example
+     * // Delete a few Calendars
+     * const { count } = await prisma.calendar.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CalendarDeleteManyArgs>(args?: SelectSubset<T, CalendarDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Calendars.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Calendars
+     * const calendar = await prisma.calendar.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CalendarUpdateManyArgs>(args: SelectSubset<T, CalendarUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Calendars and returns the data updated in the database.
+     * @param {CalendarUpdateManyAndReturnArgs} args - Arguments to update many Calendars.
+     * @example
+     * // Update many Calendars
+     * const calendar = await prisma.calendar.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Calendars and only return the `id`
+     * const calendarWithIdOnly = await prisma.calendar.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CalendarUpdateManyAndReturnArgs>(args: SelectSubset<T, CalendarUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CalendarPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Calendar.
+     * @param {CalendarUpsertArgs} args - Arguments to update or create a Calendar.
+     * @example
+     * // Update or create a Calendar
+     * const calendar = await prisma.calendar.upsert({
+     *   create: {
+     *     // ... data to create a Calendar
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Calendar we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CalendarUpsertArgs>(args: SelectSubset<T, CalendarUpsertArgs<ExtArgs>>): Prisma__CalendarClient<$Result.GetResult<Prisma.$CalendarPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Calendars.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarCountArgs} args - Arguments to filter Calendars to count.
+     * @example
+     * // Count the number of Calendars
+     * const count = await prisma.calendar.count({
+     *   where: {
+     *     // ... the filter for the Calendars we want to count
+     *   }
+     * })
+    **/
+    count<T extends CalendarCountArgs>(
+      args?: Subset<T, CalendarCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CalendarCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Calendar.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CalendarAggregateArgs>(args: Subset<T, CalendarAggregateArgs>): Prisma.PrismaPromise<GetCalendarAggregateType<T>>
+
+    /**
+     * Group by Calendar.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CalendarGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CalendarGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CalendarGroupByArgs['orderBy'] }
+        : { orderBy?: CalendarGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CalendarGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCalendarGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Calendar model
+   */
+  readonly fields: CalendarFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Calendar.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CalendarClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Calendar model
+   */
+  interface CalendarFieldRefs {
+    readonly id: FieldRef<"Calendar", 'Int'>
+    readonly leader: FieldRef<"Calendar", 'String'>
+    readonly date: FieldRef<"Calendar", 'DateTime'>
+    readonly createdAt: FieldRef<"Calendar", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Calendar findUnique
+   */
+  export type CalendarFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Calendar
+     */
+    select?: CalendarSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Calendar
+     */
+    omit?: CalendarOmit<ExtArgs> | null
+    /**
+     * Filter, which Calendar to fetch.
+     */
+    where: CalendarWhereUniqueInput
+  }
+
+  /**
+   * Calendar findUniqueOrThrow
+   */
+  export type CalendarFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Calendar
+     */
+    select?: CalendarSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Calendar
+     */
+    omit?: CalendarOmit<ExtArgs> | null
+    /**
+     * Filter, which Calendar to fetch.
+     */
+    where: CalendarWhereUniqueInput
+  }
+
+  /**
+   * Calendar findFirst
+   */
+  export type CalendarFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Calendar
+     */
+    select?: CalendarSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Calendar
+     */
+    omit?: CalendarOmit<ExtArgs> | null
+    /**
+     * Filter, which Calendar to fetch.
+     */
+    where?: CalendarWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Calendars to fetch.
+     */
+    orderBy?: CalendarOrderByWithRelationInput | CalendarOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Calendars.
+     */
+    cursor?: CalendarWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Calendars from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Calendars.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Calendars.
+     */
+    distinct?: CalendarScalarFieldEnum | CalendarScalarFieldEnum[]
+  }
+
+  /**
+   * Calendar findFirstOrThrow
+   */
+  export type CalendarFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Calendar
+     */
+    select?: CalendarSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Calendar
+     */
+    omit?: CalendarOmit<ExtArgs> | null
+    /**
+     * Filter, which Calendar to fetch.
+     */
+    where?: CalendarWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Calendars to fetch.
+     */
+    orderBy?: CalendarOrderByWithRelationInput | CalendarOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Calendars.
+     */
+    cursor?: CalendarWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Calendars from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Calendars.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Calendars.
+     */
+    distinct?: CalendarScalarFieldEnum | CalendarScalarFieldEnum[]
+  }
+
+  /**
+   * Calendar findMany
+   */
+  export type CalendarFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Calendar
+     */
+    select?: CalendarSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Calendar
+     */
+    omit?: CalendarOmit<ExtArgs> | null
+    /**
+     * Filter, which Calendars to fetch.
+     */
+    where?: CalendarWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Calendars to fetch.
+     */
+    orderBy?: CalendarOrderByWithRelationInput | CalendarOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Calendars.
+     */
+    cursor?: CalendarWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Calendars from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Calendars.
+     */
+    skip?: number
+    distinct?: CalendarScalarFieldEnum | CalendarScalarFieldEnum[]
+  }
+
+  /**
+   * Calendar create
+   */
+  export type CalendarCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Calendar
+     */
+    select?: CalendarSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Calendar
+     */
+    omit?: CalendarOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Calendar.
+     */
+    data: XOR<CalendarCreateInput, CalendarUncheckedCreateInput>
+  }
+
+  /**
+   * Calendar createMany
+   */
+  export type CalendarCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Calendars.
+     */
+    data: CalendarCreateManyInput | CalendarCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Calendar createManyAndReturn
+   */
+  export type CalendarCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Calendar
+     */
+    select?: CalendarSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Calendar
+     */
+    omit?: CalendarOmit<ExtArgs> | null
+    /**
+     * The data used to create many Calendars.
+     */
+    data: CalendarCreateManyInput | CalendarCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Calendar update
+   */
+  export type CalendarUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Calendar
+     */
+    select?: CalendarSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Calendar
+     */
+    omit?: CalendarOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Calendar.
+     */
+    data: XOR<CalendarUpdateInput, CalendarUncheckedUpdateInput>
+    /**
+     * Choose, which Calendar to update.
+     */
+    where: CalendarWhereUniqueInput
+  }
+
+  /**
+   * Calendar updateMany
+   */
+  export type CalendarUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Calendars.
+     */
+    data: XOR<CalendarUpdateManyMutationInput, CalendarUncheckedUpdateManyInput>
+    /**
+     * Filter which Calendars to update
+     */
+    where?: CalendarWhereInput
+    /**
+     * Limit how many Calendars to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Calendar updateManyAndReturn
+   */
+  export type CalendarUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Calendar
+     */
+    select?: CalendarSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Calendar
+     */
+    omit?: CalendarOmit<ExtArgs> | null
+    /**
+     * The data used to update Calendars.
+     */
+    data: XOR<CalendarUpdateManyMutationInput, CalendarUncheckedUpdateManyInput>
+    /**
+     * Filter which Calendars to update
+     */
+    where?: CalendarWhereInput
+    /**
+     * Limit how many Calendars to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Calendar upsert
+   */
+  export type CalendarUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Calendar
+     */
+    select?: CalendarSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Calendar
+     */
+    omit?: CalendarOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Calendar to update in case it exists.
+     */
+    where: CalendarWhereUniqueInput
+    /**
+     * In case the Calendar found by the `where` argument doesn't exist, create a new Calendar with this data.
+     */
+    create: XOR<CalendarCreateInput, CalendarUncheckedCreateInput>
+    /**
+     * In case the Calendar was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CalendarUpdateInput, CalendarUncheckedUpdateInput>
+  }
+
+  /**
+   * Calendar delete
+   */
+  export type CalendarDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Calendar
+     */
+    select?: CalendarSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Calendar
+     */
+    omit?: CalendarOmit<ExtArgs> | null
+    /**
+     * Filter which Calendar to delete.
+     */
+    where: CalendarWhereUniqueInput
+  }
+
+  /**
+   * Calendar deleteMany
+   */
+  export type CalendarDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Calendars to delete
+     */
+    where?: CalendarWhereInput
+    /**
+     * Limit how many Calendars to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Calendar without action
+   */
+  export type CalendarDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Calendar
+     */
+    select?: CalendarSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Calendar
+     */
+    omit?: CalendarOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -1928,6 +3035,16 @@ export namespace Prisma {
   };
 
   export type AttendeeScalarFieldEnum = (typeof AttendeeScalarFieldEnum)[keyof typeof AttendeeScalarFieldEnum]
+
+
+  export const CalendarScalarFieldEnum: {
+    id: 'id',
+    leader: 'leader',
+    date: 'date',
+    createdAt: 'createdAt'
+  };
+
+  export type CalendarScalarFieldEnum = (typeof CalendarScalarFieldEnum)[keyof typeof CalendarScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -2084,6 +3201,55 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Attendee"> | Date | string
   }
 
+  export type CalendarWhereInput = {
+    AND?: CalendarWhereInput | CalendarWhereInput[]
+    OR?: CalendarWhereInput[]
+    NOT?: CalendarWhereInput | CalendarWhereInput[]
+    id?: IntFilter<"Calendar"> | number
+    leader?: StringNullableFilter<"Calendar"> | string | null
+    date?: DateTimeFilter<"Calendar"> | Date | string
+    createdAt?: DateTimeFilter<"Calendar"> | Date | string
+  }
+
+  export type CalendarOrderByWithRelationInput = {
+    id?: SortOrder
+    leader?: SortOrderInput | SortOrder
+    date?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CalendarWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: CalendarWhereInput | CalendarWhereInput[]
+    OR?: CalendarWhereInput[]
+    NOT?: CalendarWhereInput | CalendarWhereInput[]
+    leader?: StringNullableFilter<"Calendar"> | string | null
+    date?: DateTimeFilter<"Calendar"> | Date | string
+    createdAt?: DateTimeFilter<"Calendar"> | Date | string
+  }, "id">
+
+  export type CalendarOrderByWithAggregationInput = {
+    id?: SortOrder
+    leader?: SortOrderInput | SortOrder
+    date?: SortOrder
+    createdAt?: SortOrder
+    _count?: CalendarCountOrderByAggregateInput
+    _avg?: CalendarAvgOrderByAggregateInput
+    _max?: CalendarMaxOrderByAggregateInput
+    _min?: CalendarMinOrderByAggregateInput
+    _sum?: CalendarSumOrderByAggregateInput
+  }
+
+  export type CalendarScalarWhereWithAggregatesInput = {
+    AND?: CalendarScalarWhereWithAggregatesInput | CalendarScalarWhereWithAggregatesInput[]
+    OR?: CalendarScalarWhereWithAggregatesInput[]
+    NOT?: CalendarScalarWhereWithAggregatesInput | CalendarScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Calendar"> | number
+    leader?: StringNullableWithAggregatesFilter<"Calendar"> | string | null
+    date?: DateTimeWithAggregatesFilter<"Calendar"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"Calendar"> | Date | string
+  }
+
   export type AttendeeCreateInput = {
     name: string
     confirmed?: boolean
@@ -2142,6 +3308,52 @@ export namespace Prisma {
     confirmed_leader?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CalendarCreateInput = {
+    leader?: string | null
+    date: Date | string
+    createdAt?: Date | string
+  }
+
+  export type CalendarUncheckedCreateInput = {
+    id?: number
+    leader?: string | null
+    date: Date | string
+    createdAt?: Date | string
+  }
+
+  export type CalendarUpdateInput = {
+    leader?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CalendarUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leader?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CalendarCreateManyInput = {
+    id?: number
+    leader?: string | null
+    date: Date | string
+    createdAt?: Date | string
+  }
+
+  export type CalendarUpdateManyMutationInput = {
+    leader?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CalendarUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leader?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -2313,6 +3525,35 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type CalendarCountOrderByAggregateInput = {
+    id?: SortOrder
+    leader?: SortOrder
+    date?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CalendarAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type CalendarMaxOrderByAggregateInput = {
+    id?: SortOrder
+    leader?: SortOrder
+    date?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CalendarMinOrderByAggregateInput = {
+    id?: SortOrder
+    leader?: SortOrder
+    date?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CalendarSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {

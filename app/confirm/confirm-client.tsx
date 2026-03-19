@@ -9,6 +9,7 @@ import ConfirmClientProps from "./types";
 import { useState } from "react";
 import { confirmAttendeeAction } from "../checkin/actions";
 import { useFormStatus } from "react-dom";
+import LayoutComponent from "@/components/layout/layout";
 
 
 export default function ConfirmClient({ attendees } : ConfirmClientProps) {
@@ -53,7 +54,7 @@ export default function ConfirmClient({ attendees } : ConfirmClientProps) {
     }
 
     return (
-            <div className="min-h-screen bg-linear-to-br from-slate-100 to-slate-200 flex items-center justify-center p-6"> 
+            <LayoutComponent>
                 <Card className="w-full max-w-2xl shadow-xl rounded-2xl"> 
                     <CardContent className="p-8 space-y-6">
                         <LogoComponent verse=""/> 
@@ -67,6 +68,6 @@ export default function ConfirmClient({ attendees } : ConfirmClientProps) {
                         </form>
                     </CardContent> 
                 </Card> 
-            </div>         
+            </LayoutComponent>
     )
 }

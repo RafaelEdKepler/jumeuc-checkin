@@ -22,3 +22,10 @@ model Attendee {
   updatedAt DateTime @default(now())
 }
 
+model Calendar {
+  id Int @id @default(autoincrement())
+  leader String?
+  date DateTime
+  createdAt DateTime @default(now())
+}
+
