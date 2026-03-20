@@ -34,7 +34,7 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
         redirect(`/checkin`);
     }
 
-    const handleSelectOrUnselectData = async (updatedDate: Date) => {
+    const handleSelectOrUnselectData = async (updatedDate: Date) => {        
         const filterDate = dates.find(stateDate => stateDate.getTime() === updatedDate.getTime());        
         if (filterDate) {
             setDates(prev => prev.filter(date => date !== filterDate))

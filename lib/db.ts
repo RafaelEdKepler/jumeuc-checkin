@@ -4,6 +4,7 @@ import { Attendee } from "@/app/generated/prisma";
 import { fromZonedTime } from "date-fns-tz"
 import prisma from "./prisma";
 import { addYears, endOfDay, startOfDay, startOfYear } from "date-fns";
+import { normalizeDate } from "@/app/utils/normalize-data";
 
 const timeZone = "America/Sao_Paulo";
 
@@ -78,15 +79,15 @@ export async function getDates(year: number) {
 export async function saveDates(dates: Date[]) {  
   await prisma.calendar.createMany({
     data: dates.map((date) => ({
-      date: fromZonedTime(startOfDay(date), timeZone),
+      date: normalizeDate(date),
     })),
   })
 }
 
-export async function saveSingleDate(date: Date) {
+export async function saveSingleDate(date: Date) {  
   await prisma.calendar.create({
     data: {
-      date: fromZonedTime(startOfDay(date), timeZone)
+      date: normalizeDate(date)
     }
   })
 }
@@ -94,7 +95,7 @@ export async function saveSingleDate(date: Date) {
 export async function deleteSingleData(date: Date) {
   await prisma.calendar.delete({        
     where: {
-      date: fromZonedTime(startOfDay(date), timeZone),
+      date: normalizeDate(date),
     }
   })
 }

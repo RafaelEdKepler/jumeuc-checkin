@@ -10,7 +10,7 @@ export const metadata = {
 
 export default async function ConfirmPage() {
     
-    const attendees = await getAttendeesForDate(new Date());        
+    const attendees = await getAttendeesForDate(new Date());
 
     return (
         <Suspense fallback={<Portal />}>
