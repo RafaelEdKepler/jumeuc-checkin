@@ -75,10 +75,10 @@ export async function getDates(year: number) {
   })
 }
 
-export async function saveDates(dates: Date[]) {    
+export async function saveDates(dates: Date[]) {  
   await prisma.calendar.createMany({
     data: dates.map((date) => ({
-      date,
+      date: fromZonedTime(startOfDay(date), timeZone),
     })),
   })
 }
@@ -86,7 +86,7 @@ export async function saveDates(dates: Date[]) {
 export async function saveSingleDate(date: Date) {
   await prisma.calendar.create({
     data: {
-      date: date
+      date: fromZonedTime(startOfDay(date), timeZone)
     }
   })
 }
@@ -94,7 +94,7 @@ export async function saveSingleDate(date: Date) {
 export async function deleteSingleData(date: Date) {
   await prisma.calendar.delete({        
     where: {
-      date: date,
+      date: fromZonedTime(startOfDay(date), timeZone),
     }
   })
 }

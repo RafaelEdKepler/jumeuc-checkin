@@ -35,7 +35,7 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
     }
 
     const handleSelectOrUnselectData = async (updatedDate: Date) => {
-        const filterDate = dates.find(stateDate => stateDate === updatedDate);
+        const filterDate = dates.find(stateDate => stateDate.getTime() === updatedDate.getTime());        
         if (filterDate) {
             setDates(prev => prev.filter(date => date !== filterDate))
             await deleteSingleData(filterDate);
