@@ -4,15 +4,16 @@ import LayoutComponent from "@/components/layout/layout"
 import Portal from "@/components/portal/portal"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { getDates, saveDates } from "@/lib/db"
-import { use, useMemo, useState, useTransition } from "react"
+import { deleteSingleData, getDates, saveSingleDate } from "@/lib/db"
+import { useMemo, useRef, useState, useTransition } from "react"
 import { DayPicker } from "react-day-picker"
 import 'react-day-picker/style.css'
-import { RegisterClientProps } from "./types"
+import { CalendarProp, RegisterClientProps } from "./types"
+import { redirect } from "next/navigation"
 
 export default function RegisterClient({ initialDates } : RegisterClientProps) {    
     const [dates, setDates] = useState<Date[]>(initialDates.map(calendar => calendar.date));
-    const [selectedYear, setSelectedYear] = useState<number>(2026);    
+    const selectedYearRef = useRef<number>(new Date().getFullYear())
     const months = Array.from({length: 12}, (_, i) => i);
     const [isPending, startTransition] = useTransition();
 
@@ -20,7 +21,7 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
         const newDate = new Date()
         const actualYear = newDate.getFullYear();
         let yearBeingReeded = actualYear - 5;
-        setSelectedYear(actualYear)                
+        selectedYearRef.current = actualYear;
         const years : Array<number> = [];
         while (yearBeingReeded < actualYear + 5) {
             years.push(yearBeingReeded);
@@ -30,8 +31,26 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
     }, [])
 
     const handleButtonClick = async () => {
-        await saveDates(dates);
+        redirect(`/checkin`);
     }
+
+    const handleSelectOrUnselectData = async (updatedDate: Date) => {
+        const filterDate = dates.find(stateDate => stateDate === updatedDate);
+        if (filterDate) {
+            setDates(prev => prev.filter(date => date !== filterDate))
+            await deleteSingleData(filterDate);
+            return
+        } else {
+            setDates(prev => [...prev, updatedDate])
+            await saveSingleDate(updatedDate);
+        }
+    }
+
+    const handleChangeYear = async (year: string) => {        
+        const datesOfTheSelectedYear : CalendarProp[] = await getDates(Number(year))
+        selectedYearRef.current = Number(year);
+        setDates(datesOfTheSelectedYear.map(date => date.date));
+    }    
     
     return (
         <LayoutComponent>
@@ -39,7 +58,7 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
             <Card className="w-4/5 h-full relative">
                 <Button className="absolute top-4 right-4" onClick={() => startTransition(() =>  handleButtonClick())}>Confirmar</Button>
                 <div className="flex justify-center pt-4">
-                    <select value={selectedYear} className="border-1 rounded w-30" onChange={(e) => setSelectedYear(Number(e.target.value))}>
+                    <select value={selectedYearRef.current} className="border-1 rounded w-30" onChange={(e) => handleChangeYear(e.target.value)}>
                         {optionYears.map(year => (
                             <option key={year} value={year}>
                                 {year}
@@ -47,16 +66,15 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
                         ))}                        
                     </select>
                 </div>
-                <div className="grid-cols-3 grid">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     {months.map(month => (
-                        <div key={month} className="p-2 m-2 flex justify-center align-middle items-center">
+                        <div key={`${selectedYearRef.current}-${month}`} className="p-2 m-2 flex justify-center align-middle items-center">
                             <DayPicker
-                                month={new Date(selectedYear, month)}
+                                month={new Date(selectedYearRef.current, month)}
                                 mode="multiple"
                                 selected={dates}
-                                onSelect={setDates}
+                                onDayClick={handleSelectOrUnselectData}
                                 animate
-                                required
                             />
                         </div>
                     ))}                     

@@ -82,3 +82,19 @@ export async function saveDates(dates: Date[]) {
     })),
   })
 }
+
+export async function saveSingleDate(date: Date) {
+  await prisma.calendar.create({
+    data: {
+      date: date
+    }
+  })
+}
+
+export async function deleteSingleData(date: Date) {
+  await prisma.calendar.delete({        
+    where: {
+      date: date,
+    }
+  })
+}

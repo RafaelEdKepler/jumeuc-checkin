@@ -1,4 +1,4 @@
-type CalendarProp = {
+export type CalendarProp = {
     id: number,
     createdAt: Date,
     leader: string | null,

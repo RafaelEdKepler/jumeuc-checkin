@@ -3220,13 +3220,13 @@ export namespace Prisma {
 
   export type CalendarWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    date?: Date | string
     AND?: CalendarWhereInput | CalendarWhereInput[]
     OR?: CalendarWhereInput[]
     NOT?: CalendarWhereInput | CalendarWhereInput[]
     leader?: StringNullableFilter<"Calendar"> | string | null
-    date?: DateTimeFilter<"Calendar"> | Date | string
     createdAt?: DateTimeFilter<"Calendar"> | Date | string
-  }, "id">
+  }, "id" | "date">
 
   export type CalendarOrderByWithAggregationInput = {
     id?: SortOrder
