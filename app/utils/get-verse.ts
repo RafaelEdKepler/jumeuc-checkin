@@ -2,7 +2,7 @@
 import { BibleBook } from '@/types/types';
 import rawBible from '../../lib/nvi.json'
 
-function getDailySeed() {
+export function getDailySeed() {
   const now = new Date();
   const start = new Date(now.getFullYear(), 0, 0);
   const diff = now.getTime() - start.getTime();
