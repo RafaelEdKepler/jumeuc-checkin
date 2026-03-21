@@ -58,7 +58,7 @@ export default function Home() {
                 <Card
                   key={item.title}
                   onClick={() => router.push(item.path)}
-                  className="cursor-pointer border-0 rounded-2xl overflow-hidden shadow-lg hover:scale-[1.02] transition-transform bg-transparent p-0"
+                  className="cursor-pointer border-0 rounded-2xl overflow-hidden shadow-lg hover:scale-[1.02] transition-transform bg-transparent p-0 select-none"
                 >
                   <CardContent
                     className={`bg-gradient-to-br ${item.color} text-white p-6 h-full flex flex-col justify-between`}

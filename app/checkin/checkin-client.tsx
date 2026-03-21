@@ -39,7 +39,7 @@ export default function CheckinClient({ initialAttendees, loading, verse, isTher
             <LayoutComponent>
                 <Card className="w-full max-w-2xl shadow-xl rounded-2xl"> 
                     <CardContent className="p-8 space-y-6">
-                        <LogoComponent verse={verse} isThereProgramToday={isThereProgramToday}/> 
+                        <LogoComponent verse={verse} isThereProgramToday={isThereProgramToday} isCheckin={true}/> 
                         {isThereProgramToday ? (
                             <>
                                 <form className="flex gap-2" action={(formData) => startTransition(() => handleCheckIn(formData))} > 
