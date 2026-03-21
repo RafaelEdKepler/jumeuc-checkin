@@ -48,16 +48,18 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
     }
 
     const handleChangeYear = async (year: string) => {        
-        const datesOfTheSelectedYear : CalendarProp[] = await getDates(Number(year))
-        selectedYearRef.current = Number(year);
-        setDates(datesOfTheSelectedYear.map(date => date.date));
+        startTransition(async () => {
+            const datesOfTheSelectedYear : CalendarProp[] = await getDates(Number(year))
+            selectedYearRef.current = Number(year);
+            setDates(datesOfTheSelectedYear.map(date => date.date));
+        })
     }
     
     return (
         <LayoutComponent>
             {isPending && <Portal />}
             <Card className="w-4/5 h-full relative">
-                <Button className="absolute top-4 right-4" onClick={() => startTransition(() =>  handleButtonClick())}>Confirmar</Button>
+                <Button className="absolute top-4 right-4" onClick={() =>  handleButtonClick()}>Voltar</Button>
                 <div className="flex justify-center pt-4">
                     <select value={selectedYearRef.current} className="border-1 rounded w-30" onChange={(e) => handleChangeYear(e.target.value)}>
                         {optionYears.map(year => (
