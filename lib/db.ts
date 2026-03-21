@@ -5,6 +5,7 @@ import { fromZonedTime } from "date-fns-tz"
 import prisma from "./prisma";
 import { addYears, endOfDay, startOfDay, startOfYear } from "date-fns";
 import { normalizeDate, parseDate } from "@/app/utils/normalize-data";
+import { AppError } from "@/app/utils/error-class";
 
 const timeZone = "America/Sao_Paulo";
 
@@ -34,71 +35,94 @@ export async function getAttendeesForDate(date: Date): Promise<Attendee[]> {
   const startOfThisDay = fromZonedTime(startOfDay(date), timeZone);
   const endOfThisDay = fromZonedTime(endOfDay(date), timeZone);
 
-  const attendees = await prisma.attendee.findMany({
-    where: {
-      createdAt: {
-        gte: startOfThisDay,
-        lt: endOfThisDay,
-      }
-    },
-    orderBy: { createdAt: "asc" },
-    });
-
-    return attendees;
+  try {
+    const attendees = await prisma.attendee.findMany({
+      where: {
+        createdAt: {
+          gte: startOfThisDay,
+          lt: endOfThisDay,
+        }
+      },
+      orderBy: { createdAt: "asc" },
+      });
+  
+      return attendees;
+  } catch (err) {
+    throw new AppError(`Error on get Attendees by date - ${err}`, 400)
+  }
 }
 
 export async function confirmAttendee(confirmed: number[], notConfirmed: number[]) {
-        
-    await prisma.$transaction([
-        prisma.attendee.updateMany({
-            where: {id: { in: confirmed }},
-            data: { confirmed: true, updatedAt: new Date() }
-        }),
-        prisma.attendee.updateMany({
-            where: {id: { in: notConfirmed }},
-            data: { confirmed: false, updatedAt: new Date() }
-        }),
-    ])
+    
+    try {
+      await prisma.$transaction([
+          prisma.attendee.updateMany({
+              where: {id: { in: confirmed }},
+              data: { confirmed: true, updatedAt: new Date() }
+          }),
+          prisma.attendee.updateMany({
+              where: {id: { in: notConfirmed }},
+              data: { confirmed: false, updatedAt: new Date() }
+          }),
+      ])
+    } catch (err) {
+      throw new AppError(`Error on confirm attendees - ${err}`, 400)
+    }
 
 }
 
 export async function getDates(year: number) {    
-  const start = startOfYear(new Date(year, 0, 1))
-  const end = addYears(start, 1)
-
-  return await prisma.calendar.findMany({
-    where: {
-      date: {
-        gte: start,
-        lt: end
+  try {
+    const start = startOfYear(new Date(year, 0, 1))
+    const end = addYears(start, 1)
+  
+    return await prisma.calendar.findMany({
+      where: {
+        date: {
+          gte: start,
+          lt: end
+        }
       }
-    }
-  })
+    })
+  } catch (err) {
+    throw new AppError(`Error on get dates - ${err}`, 400)
+  }
 }
 
 export async function saveDates(dates: Date[]) {  
-  await prisma.calendar.createMany({
-    data: dates.map((date) => ({
-      date: normalizeDate(date),
-    })),
-  })
+  try {
+    await prisma.calendar.createMany({
+      data: dates.map((date) => ({
+        date: normalizeDate(date),
+      })),
+    })
+  } catch (err) {
+    throw new AppError(`Error on save dates - ${err}`, 400)
+  }
 }
 
 export async function saveSingleDate(date: Date | string) {  
-  const parsedDate = parseDate(date)
-  await prisma.calendar.create({
-    data: {
-      date: normalizeDate(parsedDate)
-    }
-  })
+  try {
+    const parsedDate = parseDate(date)
+    await prisma.calendar.create({
+      data: {
+        date: normalizeDate(parsedDate)
+      }
+    })
+  } catch (err) {
+    throw new AppError(`Error on save single date - ${err}`, 400)
+  }
 }
 
 export async function deleteSingleData(date: Date | string) {
-  const parsedDate = parseDate(date)
-  console.log(parsedDate, normalizeDate(parsedDate))
-  await prisma.calendar.delete({        
-    where: {
-      date: normalizeDate(parsedDate),
-    }
-  })
+  try {
+    const parsedDate = parseDate(date)  
+    await prisma.calendar.delete({        
+      where: {
+        date: normalizeDate(parsedDate),
+      }
+    })
+  } catch (err) {
+    throw new AppError(`Error on get delete single date - ${err}`, 400)
+  }
 }
