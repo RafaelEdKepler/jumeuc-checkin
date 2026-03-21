@@ -1,6 +1,8 @@
-import { getAllAttendees } from "@/lib/db";
+import { confirmIfIsThereProgram, getAllAttendees } from "@/lib/db";
 import CheckinClient from "./checkin-client";
 import getBibleVerse from "../utils/get-verse";
+import { Calendar } from "../generated/prisma";
+import { redirect } from "next/navigation";
 
 export const metadata = {
     title: "Jumeuc - Check-in",
@@ -13,16 +15,20 @@ export default async function Page() {
     let loading = true;
 
     let attendees: string[] = [];
+    let isThereProgramToday: Calendar | null = null;
 
     const verseInfo = getBibleVerse();    
 
     try {        
-        attendees = await getAllAttendees();
+        isThereProgramToday = await confirmIfIsThereProgram(new Date());
+        if (isThereProgramToday) {
+            attendees = await getAllAttendees();
+        }
     } catch (error) {
-        console.error("Error fetching attendees:", error);
+        redirect("/error")
     } finally {
         loading = false;
     }
 
-    return <CheckinClient initialAttendees={attendees} loading={loading} verse={verseInfo}/>;
+    return <CheckinClient initialAttendees={attendees} loading={loading} verse={verseInfo} isThereProgramToday={!!isThereProgramToday}/>;
 }

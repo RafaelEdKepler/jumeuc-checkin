@@ -3,7 +3,7 @@ export function normalizeDate(date: Date) {
     date.getFullYear(),
     date.getMonth(),
     date.getDate(),
-    12, 0, 0
+    15, 0, 0
   ))
 }
 

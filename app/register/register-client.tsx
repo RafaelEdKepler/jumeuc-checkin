@@ -11,6 +11,7 @@ import 'react-day-picker/style.css'
 import { CalendarProp, RegisterClientProps } from "./types"
 import { redirect } from "next/navigation"
 import { normalizeDate } from "../utils/normalize-data"
+import { toast } from "sonner"
 
 export default function RegisterClient({ initialDates } : RegisterClientProps) {    
     const [dates, setDates] = useState<Date[]>(initialDates.map(calendar => calendar.date));
@@ -37,21 +38,29 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
 
     const handleSelectOrUnselectData = async (updatedDate: Date) => {        
         const filterDate = dates.find(stateDate => normalizeDate(stateDate).getTime() === normalizeDate(updatedDate).getTime());
-        if (filterDate) {
-            setDates(prev => prev.filter(date => date !== filterDate))
-            await deleteSingleData(filterDate);
-            return
-        } else {
-            setDates(prev => [...prev, updatedDate])
-            await saveSingleDate(updatedDate);
+        try {
+            if (filterDate) {
+                setDates(prev => prev.filter(date => date !== filterDate))            
+                await deleteSingleData(filterDate);
+                return
+            } else {
+                setDates(prev => [...prev, updatedDate])
+                await saveSingleDate(updatedDate);
+            }
+        } catch {
+            toast.error("Ocorreu um problema! Tente novamente")
         }
     }
 
     const handleChangeYear = async (year: string) => {        
         startTransition(async () => {
-            const datesOfTheSelectedYear : CalendarProp[] = await getDates(Number(year))
-            selectedYearRef.current = Number(year);
-            setDates(datesOfTheSelectedYear.map(date => date.date));
+            try {
+                const datesOfTheSelectedYear : CalendarProp[] = await getDates(Number(year))
+                selectedYearRef.current = Number(year);
+                setDates(datesOfTheSelectedYear.map(date => date.date));
+            } catch {
+                toast.error("Ocorreu um problema! Tente novamente")
+            }
         })
     }
     

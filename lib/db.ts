@@ -6,6 +6,7 @@ import prisma from "./prisma";
 import { addYears, endOfDay, startOfDay, startOfYear } from "date-fns";
 import { normalizeDate, parseDate } from "@/app/utils/normalize-data";
 import { AppError } from "@/app/utils/error-class";
+import { cache } from "react";
 
 const timeZone = "America/Sao_Paulo";
 
@@ -101,12 +102,11 @@ export async function saveDates(dates: Date[]) {
   }
 }
 
-export async function saveSingleDate(date: Date | string) {  
-  try {
-    const parsedDate = parseDate(date)
+export async function saveSingleDate(date: Date) {  
+  try {    
     await prisma.calendar.create({
       data: {
-        date: normalizeDate(parsedDate)
+        date: normalizeDate(date)
       }
     })
   } catch (err) {
@@ -124,5 +124,36 @@ export async function deleteSingleData(date: Date | string) {
     })
   } catch (err) {
     throw new AppError(`Error on get delete single date - ${err}`, 400)
+  }
+}
+
+export const confirmIfIsThereProgram = async (date: Date) => {
+  try {
+    const normalized = normalizeDate(date)
+
+    const start = new Date(Date.UTC(
+      normalized.getUTCFullYear(),
+      normalized.getUTCMonth(),
+      normalized.getUTCDate(),
+      0, 0, 0, 0
+    ))
+
+    const end = new Date(Date.UTC(
+      normalized.getUTCFullYear(),
+      normalized.getUTCMonth(),
+      normalized.getUTCDate(),
+      23, 59, 59, 999
+    ))
+
+    return await prisma.calendar.findFirst({
+      where: {
+        date: {
+          gte: start,
+          lte: end
+        }
+      }
+    })
+  } catch (err) {
+    throw new AppError(`Error verify if there is program by date - ${err}`, 400)
   }
 }
