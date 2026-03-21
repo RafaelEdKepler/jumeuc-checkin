@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { Card, CardContent } from "../ui/card";
-import { ButtonListProps } from "./types";
 import { menuItems } from "@/utils/menu-items";
 
 export default function ButtonListComponent() {
