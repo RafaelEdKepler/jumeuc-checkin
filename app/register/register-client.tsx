@@ -67,7 +67,7 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
     return (
         <LayoutComponent>
             {isPending && <Portal />}
-            <Card className="w-4/5 h-full relative">
+            <Card className="w-19/20 h-full relative">
                 <Button className="absolute top-4 right-4" onClick={() =>  handleButtonClick()}>Voltar</Button>
                 <div className="flex justify-center pt-4">
                     <select value={selectedYearRef.current} className="border-1 rounded w-30" onChange={(e) => handleChangeYear(e.target.value)}>
