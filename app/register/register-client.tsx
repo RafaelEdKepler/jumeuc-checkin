@@ -10,6 +10,7 @@ import { DayPicker } from "react-day-picker"
 import 'react-day-picker/style.css'
 import { CalendarProp, RegisterClientProps } from "./types"
 import { redirect } from "next/navigation"
+import { normalizeDate } from "../utils/normalize-data"
 
 export default function RegisterClient({ initialDates } : RegisterClientProps) {    
     const [dates, setDates] = useState<Date[]>(initialDates.map(calendar => calendar.date));
@@ -35,7 +36,7 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
     }
 
     const handleSelectOrUnselectData = async (updatedDate: Date) => {        
-        const filterDate = dates.find(stateDate => stateDate.getTime() === updatedDate.getTime());        
+        const filterDate = dates.find(stateDate => normalizeDate(stateDate).getTime() === normalizeDate(updatedDate).getTime());
         if (filterDate) {
             setDates(prev => prev.filter(date => date !== filterDate))
             await deleteSingleData(filterDate);
