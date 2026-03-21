@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { getDailySeed } from "../utils/get-verse";
+import { getDailySeed } from "../../utils/get-verse";
 import { getAllAttendees } from "@/lib/db";
 
 const styles = [

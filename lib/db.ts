@@ -4,8 +4,8 @@ import { Attendee } from "@/app/generated/prisma";
 import { fromZonedTime } from "date-fns-tz"
 import prisma from "./prisma";
 import { addYears, endOfDay, startOfDay, startOfYear } from "date-fns";
-import { normalizeDate, parseDate } from "@/app/utils/normalize-data";
-import { AppError } from "@/app/utils/error-class";
+import { normalizeDate, parseDate } from "@/utils/normalize-data";
+import { AppError } from "@/utils/error-class";
 import { cache } from "react";
 
 const timeZone = "America/Sao_Paulo";

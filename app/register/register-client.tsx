@@ -10,7 +10,7 @@ import { DayPicker } from "react-day-picker"
 import 'react-day-picker/style.css'
 import { CalendarProp, RegisterClientProps } from "./types"
 import { redirect } from "next/navigation"
-import { normalizeDate } from "../utils/normalize-data"
+import { normalizeDate } from "../../utils/normalize-data"
 import { toast } from "sonner"
 
 export default function RegisterClient({ initialDates } : RegisterClientProps) {    

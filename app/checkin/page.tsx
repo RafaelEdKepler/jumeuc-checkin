@@ -1,6 +1,6 @@
 import { confirmIfIsThereProgram, getAllAttendees } from "@/lib/db";
 import CheckinClient from "./checkin-client";
-import getBibleVerse from "../utils/get-verse";
+import getBibleVerse from "../../utils/get-verse";
 import { Calendar } from "../generated/prisma";
 import { redirect } from "next/navigation";
 

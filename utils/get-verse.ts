@@ -1,6 +1,6 @@
 
 import { BibleBook } from '@/types/types';
-import rawBible from '../../lib/nvi.json'
+import rawBible from '../lib/nvi.json'
 
 export function getDailySeed() {
   const now = new Date();
