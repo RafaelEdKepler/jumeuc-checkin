@@ -8,16 +8,13 @@ import { Input } from "@/components/ui/input";
 import ConfirmClientProps from "./types";
 import { useState } from "react";
 import { confirmAttendeeAction } from "../checkin/actions";
-import { useFormStatus } from "react-dom";
 import LayoutComponent from "@/components/layout/layout";
+import { toast } from "sonner";
 
 
 export default function ConfirmClient({ attendees } : ConfirmClientProps) {
 
-    const [attendeesList, setAttendeesList] = useState(attendees);    
-    const { pending } = useFormStatus();
-
-    
+    const [attendeesList, setAttendeesList] = useState(attendees);
 
     const handleConfirmAttendance = async () => {        
         const confirmedAttendees = attendeesList.filter(attendee => attendee.confirmed).map(attendee => attendee.id);
@@ -26,7 +23,7 @@ export default function ConfirmClient({ attendees } : ConfirmClientProps) {
         try {
             await confirmAttendeeAction(confirmedAttendees, notConfirmedAttendees);
         } catch (err) {
-            console.log('Error in fetching the confirmed')
+            toast.error("Ocorreu um problema! Tente novamente")
         }
     }
 
