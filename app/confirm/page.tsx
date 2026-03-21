@@ -8,6 +8,8 @@ export const metadata = {
     description: "Confirme a presença dos participantes no encontro de hoje",
 };
 
+export const dynamic = "force-dynamic"
+
 export default async function ConfirmPage() {
     
     const attendees = await getAttendeesForDate(new Date());

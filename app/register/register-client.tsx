@@ -51,7 +51,7 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
         const datesOfTheSelectedYear : CalendarProp[] = await getDates(Number(year))
         selectedYearRef.current = Number(year);
         setDates(datesOfTheSelectedYear.map(date => date.date));
-    }    
+    }
     
     return (
         <LayoutComponent>

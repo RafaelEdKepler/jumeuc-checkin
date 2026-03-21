@@ -7,6 +7,8 @@ export const metadata = {
     description: "Registre sua presença no encontro de hoje ✨",
 };
 
+export const dynamic = "force-dynamic"
+
 export default async function Page() {    
     let loading = true;
 

@@ -8,6 +8,8 @@ export const metadata = {
     description: "Confirme as datas das programações",
 };
 
+export const dynamic = "force-dynamic"
+
 async function CalendarData() {
   const dates = await getDates(2026)
   return <RegisterClient initialDates={dates} />
