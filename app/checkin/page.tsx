@@ -21,7 +21,7 @@ export default async function Page() {
 
     try {        
         isThereProgramToday = await confirmIfIsThereProgram(new Date());
-        if (isThereProgramToday) {
+        if (!isThereProgramToday) {
             attendees = await getAllAttendees();
         }
     } catch (error) {
