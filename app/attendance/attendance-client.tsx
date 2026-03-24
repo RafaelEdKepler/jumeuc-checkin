@@ -9,7 +9,7 @@ import { AttendanceClientProps } from "./types"
 export default function AttendanceClientPage({ topAttendants } : AttendanceClientProps) {
     return (
         <LayoutComponent>
-            <Card className="p-10 min-h-100">
+            <Card className="min-h-100 lg:p-10 sm:p-20">
                 <LogoComponent />
                 <h2 className="text-1xl font-bold text-center">Os mais assíduos da JUMEUC!</h2>
                 <AttendanceTableComponent topAttendants={topAttendants}/>
