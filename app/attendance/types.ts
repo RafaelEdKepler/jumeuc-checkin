@@ -1,7 +1,7 @@
 type TopAttendanceReturnProp = {
     name: string,
     position: number,
-    percentual: number,
+    percentual: string,
     count: number
 }
 
