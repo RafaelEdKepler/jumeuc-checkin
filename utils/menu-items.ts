@@ -1,4 +1,4 @@
-import { CalendarCheck, CalendarPlus, CheckCircle, MessageSquare } from "lucide-react";
+import { CalendarCheck, CalendarPlus, CheckCircle, List, MessageSquare } from "lucide-react";
 
 export const menuItems = [
   {
@@ -27,6 +27,13 @@ export const menuItems = [
     description: "Veja quem está presente hoje de um jeito divertido!",
     icon: MessageSquare,
     path: "/wall",
-    color: "from-white to-black",
+    color: "from-gray-400 to-black",
   },
+  {
+    title: "Lista dos mais Assíduos",
+    description: "Em que posição você está?",
+    icon: List,
+    path: "/attendance",
+    color: "from-cyan-500 to-violet-600"
+  }
 ];

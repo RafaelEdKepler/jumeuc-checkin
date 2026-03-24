@@ -157,3 +157,34 @@ export const confirmIfIsThereProgram = async (date: Date) => {
     throw new AppError(`Error verify if there is program by date - ${err}`, 400)
   }
 }
+
+export const getMoreAttendance = async () => {
+  const newDate = new Date();
+  const actualYear = newDate.getFullYear();
+  const allProgramsResponse = await prisma.calendar.count();
+  const attendeeResponse = await prisma.attendee.groupBy({
+    by: ['name'],
+    where: {
+      confirmed: true,
+      createdAt: {
+        gte: new Date(`${actualYear}-01-01`),
+        lte: new Date(`${actualYear}-12-31`)
+      }
+    },
+    _count: {
+      name: true
+    },    
+    orderBy: {
+      _count: {
+        name: 'desc'
+      }
+    },
+    take: 10
+  })
+  return attendeeResponse.map((attendee, index) => ({
+    position: index + 1,
+    name: attendee.name,
+    count: attendee._count.name,
+    percentual: (attendee._count.name * 100 / allProgramsResponse).toFixed(0)
+  }))
+}

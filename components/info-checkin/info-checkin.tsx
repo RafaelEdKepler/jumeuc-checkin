@@ -1,9 +1,9 @@
 import { InfocheckinProps } from "./types";
 
-export default function InfoCheckinComponent({ verse, isThereProgramToday } : InfocheckinProps) {
+export default function InfoCheckinComponent({ verse, isThereProgramToday }: InfocheckinProps) {
     return (
         <>
-        <h1 className="text-2xl font-semibold text-center">
+            <h1 className="text-2xl font-semibold text-center">
                 Check-in JUMEUC TCHÊ
             </h1>
             <h2 className="text-1xl font-bold text-center">{verse}</h2>

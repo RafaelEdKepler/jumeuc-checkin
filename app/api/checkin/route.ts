@@ -41,7 +41,6 @@ export async function GET(req: NextRequest) {
     },
     orderBy: { createdAt: "asc" },
   });
-  console.log(attendees)
   return NextResponse.json(attendees);
 }
 
