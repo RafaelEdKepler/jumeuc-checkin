@@ -8,3 +8,8 @@ export type CalendarProp = {
 export type RegisterClientProps = {
     initialDates: CalendarProp[]
 }
+
+export type OptimisticCalendarActionProp = {
+    type: "include" | "exclude",
+    value: Date | Date[]
+}

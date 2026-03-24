@@ -5,19 +5,28 @@ import Portal from "@/components/portal/portal"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { deleteSingleData, getDates, saveSingleDate } from "@/lib/db"
-import { useMemo, useRef, useState, useTransition } from "react"
+import { useMemo, useOptimistic, useRef, useState, useTransition } from "react"
 import { DayPicker } from "react-day-picker"
 import 'react-day-picker/style.css'
-import { CalendarProp, RegisterClientProps } from "./types"
+import { CalendarProp, OptimisticCalendarActionProp, RegisterClientProps } from "./types"
 import { redirect } from "next/navigation"
 import { normalizeDate } from "../../utils/normalize-data"
 import { toast } from "sonner"
 
-export default function RegisterClient({ initialDates } : RegisterClientProps) {    
-    const [dates, setDates] = useState<Date[]>(initialDates.map(calendar => calendar.date));
+export default function RegisterClient({ initialDates } : RegisterClientProps) {        
     const selectedYearRef = useRef<number>(new Date().getFullYear())
     const months = Array.from({length: 12}, (_, i) => i);
     const [isPending, startTransition] = useTransition();
+    const [dates, setDates] = useState(initialDates.map(date => date.date));
+    
+    const handleOptimisticDates = (state: Date[], action: OptimisticCalendarActionProp) : Date[] => {
+        if (action.type === "include") {
+            return [...state, action.value as Date]
+        }
+        return state.filter(date => date !== action.value)
+    }
+
+    const [optimisticDates, addOptimisticDate] = useOptimistic(dates, handleOptimisticDates);
 
     const optionYears = useMemo(() => {
         const newDate = new Date()
@@ -36,21 +45,28 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
         redirect(`/checkin`);
     }
 
-    const handleSelectOrUnselectData = async (updatedDate: Date) => {        
-        const filterDate = dates.find(stateDate => normalizeDate(stateDate).getTime() === normalizeDate(updatedDate).getTime());
-        try {
-            if (filterDate) {
-                setDates(prev => prev.filter(date => date !== filterDate))            
-                await deleteSingleData(filterDate);
-                return
-            } else {
-                setDates(prev => [...prev, updatedDate])
-                await saveSingleDate(updatedDate);
+    const handleSelectOrUnselectData = async (updatedDate: Date) => {
+        const exists = optimisticDates.some(
+        d => normalizeDate(d).getTime() === normalizeDate(updatedDate).getTime()
+        );
+        startTransition(async () => {
+            addOptimisticDate({
+                type: exists ? "exclude" : "include",
+                value: updatedDate
+            });
+
+            try {
+                if (exists) {
+                    await deleteSingleData(updatedDate);
+                } else {
+                    await saveSingleDate(updatedDate);
+                }
+            } catch {
+                toast.error("Ocorreu um problema! Tente novamente");
+                addOptimisticDate({ type: exists ? "exclude" : "include", value: updatedDate });
             }
-        } catch {
-            toast.error("Ocorreu um problema! Tente novamente")
-        }
-    }
+        });
+    };
 
     const handleChangeYear = async (year: string) => {        
         startTransition(async () => {
@@ -84,7 +100,7 @@ export default function RegisterClient({ initialDates } : RegisterClientProps) {
                             <DayPicker
                                 month={new Date(selectedYearRef.current, month)}
                                 mode="multiple"
-                                selected={dates}
+                                selected={optimisticDates}
                                 onDayClick={handleSelectOrUnselectData}
                                 animate
                             />

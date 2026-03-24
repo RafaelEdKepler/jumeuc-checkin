@@ -1,31 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { getDailySeed } from "../../utils/get-verse";
 import { getAllAttendees } from "@/lib/db";
-
-const styles = [
-    "adventurer",
-    "fun-emoji",
-    "bottts",
-    "pixel-art",
-    "thumbs",
-    "lorelei",
-    "adventure-neutral",
-    "big-ears",
-    "bottts-neutral",
-    "croodles",
-    "notionists-neutral"
-];
-
-function generateAvatar(name: string, index: number) {
-    const style = styles[getDailySeed() % styles.length];
-    return `https://api.dicebear.com/7.x/${style}/svg?seed=${name}`;
-}
+import { generateAvatar } from "@/utils/wall-utils";
 
 export default function WallClient() {
     const [users, setUsers] = useState<string[]>([]);
+    
+    const userPositions = useMemo(() => {
+        return users.map((name) => ({
+            name,
+            initialX: Math.random() * 80,
+            initialY: Math.random() * 80,
+            pathX: [Math.random() * 80, Math.random() * 80],
+            pathY: [Math.random() * 80, Math.random() * 80],
+            duration: 8 + Math.random() * 5,
+    }));
+}, [users]);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -33,7 +25,6 @@ export default function WallClient() {
 
             setUsers((prev) => {
                 if (usersUpdated.length !== prev.length) {
-                    console.log("entrou")
                     return usersUpdated
                 }
                 return prev
@@ -61,44 +52,39 @@ export default function WallClient() {
             </h1>
 
             <div className="w-full h-screen relative">
-                {users.map((name, index) => {
-                    const randomX = Math.random() * 80;
-                    const randomY = Math.random() * 80;
-
-                    return (
-                        <motion.div
-                            key={name}
-                            className="absolute flex flex-col items-center"
-                            initial={{ x: `${randomX}vw`, y: `${randomY}vh`, scale: 0 }}
-                            animate={{
-                                x: [
-                                    `${randomX}vw`,
-                                    `${Math.random() * 80}vw`,
-                                    `${Math.random() * 80}vw`,
-                                ],
-                                y: [
-                                    `${randomY}vh`,
-                                    `${Math.random() * 80}vh`,
-                                    `${Math.random() * 80}vh`,
-                                ],
-                                scale: 2,
-                            }}
-                            transition={{
-                                duration: 8 + Math.random() * 5,
-                                repeat: Infinity,
-                                repeatType: "mirror",
-                                ease: "easeInOut",
-                            }}
-                        >
-                            <img
-                                src={generateAvatar(name, index)}
-                                alt={name}
-                                className="w-16 h-16 drop-shadow-xl"
-                            />
-                            <span className="text-xs text-white mt-1">{name}</span>
-                        </motion.div>
-                    );
-                })}
+                {userPositions && userPositions.map((user) => (                    
+                    <motion.div
+                        key={user.name}
+                        className="absolute flex flex-col items-center"
+                        initial={{ x: `${user.initialX}vw`, y: `${user.initialY}vh`, scale: 0 }}
+                        animate={{
+                            x: [
+                                `${user.initialX}vw`,
+                                `${user.pathX[0]}vw`,
+                                `${user.pathX[1]}vw`,
+                            ],
+                            y: [
+                                `${user.initialY}vh`,
+                                `${user.pathY[0]}vh`,
+                                `${user.pathY[1]}vh`,
+                            ],
+                            scale: 2,
+                        }}
+                        transition={{
+                            duration: user.duration,
+                            repeat: Infinity,
+                            repeatType: "mirror",
+                            ease: "easeInOut",
+                        }}
+                    >
+                        <img
+                            src={generateAvatar(user.name)}
+                            alt={user.name}
+                            className="w-16 h-16 drop-shadow-xl"
+                        />
+                        <span className="text-xs text-white mt-1">{user.name}</span>
+                    </motion.div>
+                ))}
             </div>
         </div>
     );
