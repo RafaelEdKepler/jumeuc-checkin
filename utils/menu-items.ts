@@ -1,4 +1,4 @@
-import { CalendarCheck, CalendarPlus, CheckCircle, List, MessageSquare } from "lucide-react";
+import { CalendarCheck, CalendarPlus, CheckCircle, List, MessageSquare, UserCog } from "lucide-react";
 
 export const menuItems = [
   {
@@ -49,7 +49,7 @@ export const menuItems = [
   {
     title: "Sou líder",
     description: "Se você é líder, entre com a senha para ter acesso as demais funcionalidades!",
-    icon: List,
+    icon: UserCog,
     path: undefined,
     color: "from-red-300 to-orange-300",
     onlyLeader: false,
