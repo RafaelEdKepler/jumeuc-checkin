@@ -1,16 +1,21 @@
 "use client"
 
-import { create } from "zustand"
+import { create,  } from "zustand"
+import { persist } from "zustand/middleware"
 
 type LeaderProp = {
     isLeader: boolean,
-    setIsLeader: () => void
+    setIsLeader: () => void,
 }
 
-const leader = localStorage.getItem("@jumeuctche/leader");
-const parsedLeader = JSON.parse(leader ? leader : "false");
-
-export const useLeader = create<LeaderProp>((set) => ({
-    isLeader: !!parsedLeader,
-    setIsLeader: () => set({isLeader : true})
-}))
+export const useLeader = create<LeaderProp>()(
+  persist(
+    (set) => ({
+      isLeader: false,
+      setIsLeader: () => set({ isLeader: true })
+    }),
+    {
+      name: "@jumeuctche/leader"
+    }
+  )
+)

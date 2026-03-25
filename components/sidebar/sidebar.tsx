@@ -19,7 +19,7 @@ import { useLeader } from "@/hooks/use-leader";
 export default function SidebarComponent() {
 
     const { open, setOpen, toggleSidebar } = useSidebar();
-    const { isLeader } = useLeader();
+    const isLeader = useLeader((state) => state.isLeader);
     const { open : openDialog } = useDialog();
     const pathname = usePathname();
     const router = useRouter();
