@@ -10,10 +10,10 @@ import { useLeader } from "@/hooks/use-leader";
 export default function LeaderDialog() {
     const [password, setPassword] = useState<string>("");
     const { isOpen, close } = useDialog();
-    const { setIsLeader } = useLeader();
+    const { setIsLeader } = useLeader();    
 
     const handleConfirmPassword = () => {
-        if (password === "minhoone123") {
+        if (password === process.env.NEXT_PUBLIC_LEADER_PASSWORD) {
             localStorage.setItem("@jumeuctche/leader", "true");
             setIsLeader();
         }

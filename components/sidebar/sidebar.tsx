@@ -14,10 +14,12 @@ import {
 import { menuItems } from "@/utils/menu-items";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { useLeader } from "@/hooks/use-leader";
 
 export default function SidebarComponent() {
 
     const { open, setOpen, toggleSidebar } = useSidebar();
+    const { isLeader } = useLeader();
     const { open : openDialog } = useDialog();
     const pathname = usePathname();
     const router = useRouter();
@@ -70,20 +72,24 @@ export default function SidebarComponent() {
                             >
                                 Início
                             </SidebarMenuButton>
-
-                            {menuItems.map((menuItem) => (
-                                <SidebarMenuButton
-                                    key={menuItem.title}
-                                    onClick={() => handleSidebarClick(menuItem.path)}
-                                    tooltip={menuItem.description}
-                                    variant="outline"
-                                    className="flex items-center justify-center cursor-pointer"
-                                    isActive={pathname === menuItem.path}
-                                >
-                                    {menuItem.title}
-                                </SidebarMenuButton>
-                            ))}
-
+                                {menuItems.filter(item => {
+                                    if (item.onlyLeader) return isLeader;
+                                    if (item.onlyMember) return !isLeader;
+                                    return true;
+                                })
+                                .map((menuItem) => {
+                                    return (
+                                        <SidebarMenuButton
+                                            key={menuItem.title}
+                                            onClick={() => handleSidebarClick(menuItem.path)}
+                                            tooltip={menuItem.description}
+                                            variant="outline"
+                                            className="flex items-center justify-center cursor-pointer"
+                                            isActive={pathname === menuItem.path}
+                                        >
+                                            {menuItem.title}
+                                        </SidebarMenuButton>
+                                )})}
                         </SidebarMenuItem>
                     </SidebarMenu>
                 </SidebarHeader>
