@@ -7,6 +7,8 @@ export const menuItems = [
     icon: CheckCircle,
     path: "/checkin",
     color: "from-green-500 to-emerald-600",
+    onlyLeader: false,
+    onlyMember: false,
   },
   {
     title: "Confirmar Presença",
@@ -14,6 +16,8 @@ export const menuItems = [
     icon: CalendarCheck,
     path: "/confirm",
     color: "from-amber-300 to-yellow-600",
+    onlyLeader: true,
+    onlyMember: false,
   },
   {
     title: "Registrar Programações",
@@ -21,6 +25,8 @@ export const menuItems = [
     icon: CalendarPlus,
     path: "/register",
     color: "from-orange-500 to-red-600",
+    onlyLeader: true,
+    onlyMember: false,
   },
   {
     title: "Mural",
@@ -28,12 +34,25 @@ export const menuItems = [
     icon: MessageSquare,
     path: "/wall",
     color: "from-gray-400 to-black",
+    onlyLeader: false,
+    onlyMember: false,
   },
   {
     title: "Lista dos mais Assíduos",
     description: "Em que posição você está?",
     icon: List,
     path: "/attendance",
-    color: "from-cyan-500 to-violet-600"
+    color: "from-cyan-500 to-violet-600",
+    onlyLeader: false,
+    onlyMember: false,
+  },
+  {
+    title: "Sou líder",
+    description: "Se você é líder, entre com a senha para ter acesso as demais funcionalidades!",
+    icon: List,
+    path: undefined,
+    color: "from-red-300 to-orange-300",
+    onlyLeader: false,
+    onlyMember: true,
   }
 ];

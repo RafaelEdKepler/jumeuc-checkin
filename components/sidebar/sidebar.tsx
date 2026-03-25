@@ -1,5 +1,6 @@
 "use client"
 
+import { useDialog } from "@/hooks/use-dialog";
 import { 
     Sidebar, 
     SidebarContent, 
@@ -17,14 +18,18 @@ import { usePathname, useRouter } from "next/navigation";
 export default function SidebarComponent() {
 
     const { open, setOpen, toggleSidebar } = useSidebar();
+    const { open : openDialog } = useDialog();
     const pathname = usePathname();
     const router = useRouter();
 
-    const handleSidebarClick = (url: string) => {
-        router.push(url);
+    const handleSidebarClick = (url: string | undefined) => {
         setOpen(false);
+        if (url) {
+            router.push(url);
+            return;
+        }
+        openDialog();
     }
-
 
     return (
         <>

@@ -1,6 +1,5 @@
 import ButtonListComponent from "@/components/button-list/button-list";
 import LayoutComponent from "@/components/layout/layout";
-import { CalendarCheck, CalendarPlus, CheckCircle, MessageSquare } from "lucide-react";
 
 export const metadata = {
   title: "Jumeuc Tchê",

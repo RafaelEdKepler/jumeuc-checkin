@@ -1,14 +1,17 @@
+"use client"
+
 import { ReactNode } from "react";
 import { Toaster } from "../ui/sonner";
-import { SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarProvider, useSidebar } from "../ui/sidebar";
-import { Sidebar } from "lucide-react";
+import { SidebarProvider } from "../ui/sidebar";
 import SidebarComponent from "../sidebar/sidebar";
+import LeaderDialog from "../leader-dialog/leader-dialog";
 
 interface LayoutComponentProps {
     children: ReactNode
 }
 
 export default function LayoutComponent({children} : LayoutComponentProps) {
+
     return (
         <>
             <div className="min-h-screen bg-linear-to-br from-slate-100 to-slate-200 flex items-center justify-center p-6"> 
@@ -22,6 +25,7 @@ export default function LayoutComponent({children} : LayoutComponentProps) {
                         } as React.CSSProperties
                     }>
                 <SidebarComponent />
+                <LeaderDialog />
             </SidebarProvider>
         </>
     )
