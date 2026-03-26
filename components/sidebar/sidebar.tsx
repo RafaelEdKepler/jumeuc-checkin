@@ -1,14 +1,14 @@
 "use client"
 
 import { useDialog } from "@/hooks/use-dialog";
-import { 
-    Sidebar, 
-    SidebarContent, 
-    SidebarHeader, 
-    SidebarMenu, 
-    SidebarMenuButton, 
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
     SidebarMenuItem,
-    useSidebar 
+    useSidebar
 } from "../ui/sidebar";
 
 import { menuItems } from "@/utils/menu-items";
@@ -35,28 +35,28 @@ export default function SidebarComponent() {
 
     return (
         <>
-            <div className="fixed top-4 left-4 z-50 md:hidden">                
+            <div className="fixed top-4 left-4 z-50 md:hidden">
                 <button onClick={toggleSidebar} className="p-2 rounded-md hover:bg-muted transition">
-                    <Image 
-                        alt="logo da jumeuc" 
-                        src="/logo_juve_correto.png" 
-                        width={30} 
-                        height={30} 
+                    <Image
+                        alt="logo da jumeuc"
+                        src="/logo_juve_correto.png"
+                        width={30}
+                        height={30}
                     />
-                </button>                
+                </button>
             </div>
 
             <Sidebar collapsible="icon" className="z-40">
                 <SidebarHeader>
-                    <SidebarContent 
+                    <SidebarContent
                         onClick={toggleSidebar}
-                        className="cursor-pointer"                        
+                        className="cursor-pointer"
                     >
-                        <Image 
-                            alt="logo da jumeuc" 
-                            src="/logo_juve_correto.png" 
-                            width={30} 
-                            height={30} 
+                        <Image
+                            alt="logo da jumeuc"
+                            src="/logo_juve_correto.png"
+                            width={30}
+                            height={30}
                         />
                     </SidebarContent>
 
