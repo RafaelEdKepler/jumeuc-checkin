@@ -6,7 +6,6 @@ import prisma from "./prisma";
 import { addYears, endOfDay, startOfDay, startOfYear } from "date-fns";
 import { normalizeDate, parseDate } from "@/utils/normalize-data";
 import { AppError } from "@/utils/error-class";
-import { cache } from "react";
 
 const timeZone = "America/Sao_Paulo";
 
@@ -18,8 +17,9 @@ export async function getAllAttendees(): Promise<string[]> {
         where: { 
             createdAt: {
                 gte: startOfToday,
-                lte: endOfToday,
-            } 
+                lte: endOfToday,                
+            },
+            confirmed: true
         },
     });
     return response.map((attendee: Attendee) => attendee.name);
@@ -161,14 +161,21 @@ export const confirmIfIsThereProgram = async (date: Date) => {
 export const getMoreAttendance = async () => {
   const newDate = new Date();
   const actualYear = newDate.getFullYear();
-  const allProgramsResponse = await prisma.calendar.count();
+  const allProgramsResponse = await prisma.calendar.count({
+    where: {
+      date: {
+        gte: new Date(`${actualYear}-01-01`),
+        lte: new Date()
+      }
+    }
+  });
   const attendeeResponse = await prisma.attendee.groupBy({
     by: ['name'],
     where: {
       confirmed: true,
       createdAt: {
         gte: new Date(`${actualYear}-01-01`),
-        lte: new Date(`${actualYear}-12-31`)
+        lte: new Date()
       }
     },
     _count: {

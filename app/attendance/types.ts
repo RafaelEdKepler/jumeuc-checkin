@@ -1,4 +1,4 @@
-type TopAttendanceReturnProp = {
+export type TopAttendanceReturnProp = {
     name: string,
     position: number,
     percentual: string,
@@ -6,5 +6,6 @@ type TopAttendanceReturnProp = {
 }
 
 export type AttendanceClientProps = {
-    topAttendants: Array<TopAttendanceReturnProp> | undefined
+    topAttendants: Array<TopAttendanceReturnProp>;
+    loading: boolean
 }

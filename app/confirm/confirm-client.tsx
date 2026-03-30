@@ -10,9 +10,10 @@ import { useState } from "react";
 import { confirmAttendeeAction } from "../checkin/actions";
 import LayoutComponent from "@/components/layout/layout";
 import { toast } from "sonner";
+import ListSkelletonComponent from "@/components/list-skelleton/list-skelleton";
 
 
-export default function ConfirmClient({ attendees } : ConfirmClientProps) {
+export default function ConfirmClient({ attendees, loading } : ConfirmClientProps) {
 
     const [attendeesList, setAttendeesList] = useState(attendees);
 
@@ -56,10 +57,14 @@ export default function ConfirmClient({ attendees } : ConfirmClientProps) {
                     <CardContent className="p-8 space-y-6">
                         <LogoComponent verse=""/> 
                         <form className="flex gap-2" action={handleGetAttendeesForDate} >                        
-                            <Input type="date" name="date" defaultValue={new Date().toLocaleDateString("sv-SE")}/>
+                            <Input type="date" name="date" defaultValue={new Date().toLocaleDateString("sv-SE")} disabled={loading}/>
                             <Button type="submit">Pesquisar</Button>
                         </form>
-                        <ListConfirmComponent attendees={attendeesList} onAttendeePress={handleUpdateAttendance}/> 
+                        {loading ? (
+                            <ListSkelletonComponent />
+                        ) : (
+                            <ListConfirmComponent attendees={attendeesList} onAttendeePress={handleUpdateAttendance}/> 
+                        )}
                         <form className="w-full align-middle justify-center" action={handleConfirmAttendance}>
                             <Button onClick={handleConfirmAttendance} type="submit">Confirmar</Button>
                         </form>

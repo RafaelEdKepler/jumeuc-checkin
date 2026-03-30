@@ -11,6 +11,7 @@ import { CheckinClientProps } from "./types";
 import Portal from "@/components/portal/portal";
 import LayoutComponent from "@/components/layout/layout";
 import { toast } from "sonner";
+import ListSkelletonComponent from "@/components/list-skelleton/list-skelleton";
 
 export default function CheckinClient({ initialAttendees, loading, verse, isThereProgramToday }: CheckinClientProps) {    
     
@@ -35,7 +36,7 @@ export default function CheckinClient({ initialAttendees, loading, verse, isTher
 
     return (
         <>
-            {(isPending || loading) && <Portal />}
+            {(isPending ) && <Portal />}
             <LayoutComponent>
                 <Card className="w-full max-w-2xl shadow-xl rounded-2xl"> 
                     <CardContent className="p-8 space-y-6">
@@ -43,10 +44,14 @@ export default function CheckinClient({ initialAttendees, loading, verse, isTher
                         {isThereProgramToday ? (
                             <>
                                 <form className="flex gap-2" action={(formData) => startTransition(() => handleCheckIn(formData))} > 
-                                    <Input placeholder="Digite seu nome" name="name" /> 
+                                    <Input placeholder="Digite seu nome" name="name" disabled={loading}/> 
                                     <Button type="submit">Confirmar</Button> 
-                                </form> 
-                                <ListComponent attendees={optimisticAttendees} /> 
+                                </form>
+                                {loading ? (
+                                    <ListSkelletonComponent />
+                                ) : (
+                                    <ListComponent attendees={optimisticAttendees} /> 
+                                )}
                             </>
                         ) : (
                             <></>

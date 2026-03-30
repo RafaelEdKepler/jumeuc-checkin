@@ -3,6 +3,8 @@ import CheckinClient from "./checkin-client";
 import getBibleVerse from "../../utils/get-verse";
 import { Calendar } from "../generated/prisma";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import LoadingCheckin from "./loading";
 
 export const metadata = {
     title: "Jumeuc - Check-in",
@@ -11,13 +13,11 @@ export const metadata = {
 
 export const dynamic = "force-dynamic"
 
-export default async function Page() {    
-    let loading = true;
+const verseInfo = getBibleVerse();    
 
+async function CheckinPage() {
     let attendees: string[] = [];
     let isThereProgramToday: Calendar | null = null;
-
-    const verseInfo = getBibleVerse();    
 
     try {        
         isThereProgramToday = await confirmIfIsThereProgram(new Date());
@@ -26,9 +26,18 @@ export default async function Page() {
         }
     } catch (error) {
         redirect("/error")
-    } finally {
-        loading = false;
     }
 
-    return <CheckinClient initialAttendees={attendees} loading={loading} verse={verseInfo} isThereProgramToday={!!isThereProgramToday}/>;
+    return (
+        <CheckinClient initialAttendees={attendees} loading={false} verse={verseInfo} isThereProgramToday={!!isThereProgramToday}/>
+    )
+}
+
+export default async function Page() {    
+
+    return (
+        <Suspense fallback={<LoadingCheckin verseInfo={verseInfo} />}>
+            <CheckinPage />
+        </Suspense>
+    )
 }

@@ -2,6 +2,7 @@ import { getAttendeesForDate } from "@/lib/db";
 import ConfirmClient from "./confirm-client";
 import { Suspense } from "react";
 import Portal from "@/components/portal/portal";
+import LoadingConfirmClient from "./loading";
 
 export const metadata = {
     title: "Jumeuc - Liderança",
@@ -10,13 +11,21 @@ export const metadata = {
 
 export const dynamic = "force-dynamic"
 
-export default async function ConfirmPage() {
-    
+async function ConfirmPage() {
     const attendees = await getAttendeesForDate(new Date());
 
     return (
-        <Suspense fallback={<Portal />}>
-            <ConfirmClient attendees={attendees}/>
+        <ConfirmClient attendees={attendees} loading={false}/>
+    )
+
+}
+
+export default async function Page() {
+    
+
+    return (
+        <Suspense fallback={<LoadingConfirmClient />}>
+            <ConfirmPage />
         </Suspense>
     )
 }

@@ -1,7 +1,7 @@
-import { AttendanceClientProps } from "@/app/attendance/types";
 import { Table, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import { AttendanceTableProp } from "./types";
 
-export default function AttendanceTableComponent({ topAttendants } : AttendanceClientProps) {    
+export default function AttendanceTableComponent({ topAttendants } : AttendanceTableProp) {    
     return (
         <Table>
             <TableCaption>Os mais assíduos da JUMEUC! 🔥</TableCaption>
