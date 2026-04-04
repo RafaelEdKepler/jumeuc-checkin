@@ -8,6 +8,8 @@ export const metadata = {
     description: "Veja em que posição você está!"
 }
 
+export const dynamic = "force-dynamic"
+
 async function Attendance() {
     
     const topAttendees = await getMoreAttendance();    
