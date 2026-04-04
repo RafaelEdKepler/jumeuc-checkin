@@ -17,8 +17,8 @@ export default function WallClient() {
 
     const handleKeyDown = (e: KeyboardEvent) => {
         const defineWhatWillBeVisible : Record<string, () => void> = {
-            "ArrowRight": () => setIsWhatVisible(prev => prev < 2 ? prev + 1 : prev),
-            "ArrowLeft": () => setIsWhatVisible(prev => prev > 0 ? prev - 1 : prev)
+            "PageUp": () => setIsWhatVisible(prev => prev < 2 ? prev + 1 : prev),
+            "PageDown": () => setIsWhatVisible(prev => prev > 0 ? prev - 1 : prev)
         }
         defineWhatWillBeVisible[e.key]()
     }
