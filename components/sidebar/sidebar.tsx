@@ -18,7 +18,7 @@ import { useLeader } from "@/hooks/use-leader";
 
 export default function SidebarComponent() {
 
-    const { open, setOpen, toggleSidebar } = useSidebar();
+    const { open, setOpen, toggleSidebar, isMobile } = useSidebar();
     const isLeader = useLeader((state) => state.isLeader);
     const { open : openDialog } = useDialog();
     const pathname = usePathname();
@@ -60,7 +60,7 @@ export default function SidebarComponent() {
                         />
                     </SidebarContent>
 
-                    <SidebarMenu hidden={!open}>
+                    <SidebarMenu hidden={!isMobile && !open ? true : false}>
                         <SidebarMenuItem>
 
                             <SidebarMenuButton

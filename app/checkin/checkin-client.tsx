@@ -1,6 +1,6 @@
 "use client";
 
-import { useOptimistic, useTransition } from "react";
+import { useEffect, useOptimistic, useState, useTransition } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import LogoComponent from "@/components/logo/logo";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,7 @@ import ListSkelletonComponent from "@/components/list-skelleton/list-skelleton";
 
 export default function CheckinClient({ initialAttendees, loading, verse, isThereProgramToday }: CheckinClientProps) {    
     
+    const [storedNames, setStoredNames] = useState<string[]>([]);
     const [isPending, startTransition] = useTransition();
     const [optimisticAttendees, addOptimisticAttendees] =
         useOptimistic(initialAttendees, (state, newName: string) => [
@@ -22,16 +23,33 @@ export default function CheckinClient({ initialAttendees, loading, verse, isTher
             newName,
         ]);
 
-    const handleCheckIn = async (formData : FormData) => {
-        const name = formData.get("name") as string;
-        if (!name) return;
-        addOptimisticAttendees(name);
-        try {
-            await checkIn(formData);
-        } catch (err) {
-            toast.error("Ocorreu um problema! Tente novamente")
-        }
+    const handleCheckIn = async (formData: FormData) => {
+    const name = formData.get("name") as string;
+    if (!name) return;
+
+    addOptimisticAttendees(name);
+    
+    setStoredNames(prev => {
+        if (prev.includes(name)) return prev;
+        const updated = [...prev, name];
+        localStorage.setItem("@checkin/names", JSON.stringify(updated));
+        return updated;
+    });
+
+    try {
+        await checkIn(formData);
+    } catch {
+        toast.error("Ocorreu um problema! Tente novamente");
     }
+    };
+
+
+    useEffect(() => {
+        const saved = localStorage.getItem("@checkin/names");
+        if (saved) {
+            setStoredNames(JSON.parse(saved));
+        }
+    }, []);
 
 
     return (
@@ -45,6 +63,11 @@ export default function CheckinClient({ initialAttendees, loading, verse, isTher
                             <>
                                 <form className="flex gap-2" action={(formData) => startTransition(() => handleCheckIn(formData))} > 
                                     <Input placeholder="Digite seu nome" name="name" disabled={loading}/> 
+                                    <datalist id="names">
+                                        {storedNames.map(name => (
+                                            <option key={name} value={name} />
+                                        ))}
+                                    </datalist>
                                     <Button type="submit">Confirmar</Button> 
                                 </form>
                                 {loading ? (
