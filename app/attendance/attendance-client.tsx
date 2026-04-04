@@ -10,7 +10,7 @@ import ListSkelletonComponent from "@/components/list-skelleton/list-skelleton"
 export default function AttendanceClientPage({ topAttendants, loading } : AttendanceClientProps) {
     return (
         <LayoutComponent>
-            <Card className="min-h-100 lg:p-10 sm:p-20">
+            <Card className="min-h-100 w-full lg:p-10 sm:p-20">
                 <LogoComponent />
                 <h2 className="text-1xl font-bold text-center">Os mais assíduos da JUMEUC!</h2>
                 {loading ? (

@@ -36,7 +36,7 @@ export default function SidebarComponent() {
     return (
         <>
             <div className="fixed top-4 left-4 z-50 md:hidden">
-                <button onClick={toggleSidebar} className="p-2 rounded-md hover:bg-muted transition">
+                <button onClick={toggleSidebar} className="p-2 rounded-md hover:bg-muted transition bg-white">
                     <Image
                         alt="logo da jumeuc"
                         src="/logo_juve_correto.png"
@@ -46,7 +46,7 @@ export default function SidebarComponent() {
                 </button>
             </div>
 
-            <Sidebar collapsible="icon" className="z-40">
+            <Sidebar collapsible="icon" className="z-40 h-auto">
                 <SidebarHeader>
                     <SidebarContent
                         onClick={toggleSidebar}
