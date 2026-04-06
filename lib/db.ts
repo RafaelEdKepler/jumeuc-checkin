@@ -9,20 +9,31 @@ import { AppError } from "@/utils/error-class";
 
 const timeZone = "America/Sao_Paulo";
 
-export async function getAllAttendees(): Promise<string[]> {
-    const now = new Date();
-    const startOfToday = fromZonedTime(startOfDay(now), timeZone);
-    const endOfToday = fromZonedTime(endOfDay(now), timeZone);
-    const response = await prisma.attendee.findMany({
-        where: { 
-            createdAt: {
-                gte: startOfToday,
-                lte: endOfToday,                
-            },
-            confirmed: true
-        },
-    });
-    return response.map((attendee: Attendee) => attendee.name);
+export async function getAllAttendees(): Promise<string[]> {  
+  const normalized = normalizeDate(new Date());  
+  const startOfToday = new Date(Date.UTC(
+    normalized.getUTCFullYear(),
+    normalized.getUTCMonth(),
+    normalized.getUTCDate(),
+    0, 0, 0, 0
+  ))
+
+  const endOfToday = new Date(Date.UTC(
+    normalized.getUTCFullYear(),
+    normalized.getUTCMonth(),
+    normalized.getUTCDate(),
+    23, 59, 59, 999
+  ))
+  const response = await prisma.attendee.findMany({
+      where: { 
+          createdAt: {
+              gte: startOfToday,
+              lte: endOfToday,                
+          },
+          confirmed: true
+      },
+  });
+  return response.map((attendee: Attendee) => attendee.name);
 }
 
 export async function addAttendee(name: string) {

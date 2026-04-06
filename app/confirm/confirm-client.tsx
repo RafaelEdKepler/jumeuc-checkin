@@ -23,6 +23,7 @@ export default function ConfirmClient({ attendees, loading } : ConfirmClientProp
 
         try {
             await confirmAttendeeAction(confirmedAttendees, notConfirmedAttendees);
+            toast.success("Alterações efetuadas com sucesso!")
         } catch (err) {
             toast.error("Ocorreu um problema! Tente novamente")
         }
@@ -66,7 +67,7 @@ export default function ConfirmClient({ attendees, loading } : ConfirmClientProp
                             <ListConfirmComponent attendees={attendeesList} onAttendeePress={handleUpdateAttendance}/> 
                         )}
                         <form className="w-full align-middle justify-center" action={handleConfirmAttendance}>
-                            <Button onClick={handleConfirmAttendance} type="submit">Confirmar</Button>
+                            <Button type="submit">Confirmar</Button>
                         </form>
                     </CardContent> 
                 </Card> 
