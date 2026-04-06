@@ -125,6 +125,10 @@
   }
 }
 
+body {
+  background: #e2e8f0 !important;
+}
+
 .rdp {
   --rdp-cell-size: 36px;
   font-size: 0.85rem;
