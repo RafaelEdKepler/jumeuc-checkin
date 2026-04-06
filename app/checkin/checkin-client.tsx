@@ -12,35 +12,61 @@ import Portal from "@/components/portal/portal";
 import LayoutComponent from "@/components/layout/layout";
 import { toast } from "sonner";
 import ListSkelletonComponent from "@/components/list-skelleton/list-skelleton";
+import { AttendeeWithCount, getHowManyAttendance } from "@/lib/db";
 
 export default function CheckinClient({ initialAttendees, loading, verse, isThereProgramToday }: CheckinClientProps) {    
     
     const [storedNames, setStoredNames] = useState<string[]>([]);
+    const [attendees, setAttendees] = useState<AttendeeWithCount[]>(initialAttendees)
     const [isPending, startTransition] = useTransition();
     const [optimisticAttendees, addOptimisticAttendees] =
-        useOptimistic(initialAttendees, (state, newName: string) => [
-            ...state,
-            newName,
-        ]);
+    useOptimistic(attendees, (state, attendee: AttendeeWithCount) => {
+        const exists = state.some(a => a.name === attendee.name);
 
-    const handleCheckIn = async (formData: FormData) => {
-    const name = formData.get("name") as string;
-    if (!name) return;
+        if (exists) {
+            return state.map(a =>
+                a.name === attendee.name ? attendee : a
+            );
+        }
 
-    addOptimisticAttendees(name);
-    
-    setStoredNames(prev => {
-        if (prev.includes(name)) return prev;
-        const updated = [...prev, name];
-        localStorage.setItem("@checkin/names", JSON.stringify(updated));
-        return updated;
+        return [...state, attendee];
     });
 
-    try {
-        await checkIn(formData);
-    } catch {
-        toast.error("Ocorreu um problema! Tente novamente");
-    }
+    const handleCheckIn = async (formData: FormData) => {
+        const name = formData.get("name") as string;
+        if (!name) return;
+
+        addOptimisticAttendees({name, count: 1});
+        
+        setStoredNames(prev => {
+            if (prev.includes(name)) return prev;
+            const updated = [...prev, name];
+            localStorage.setItem("@checkin/names", JSON.stringify(updated));
+            return updated;
+        });
+
+        try {
+            await checkIn(formData);
+            const howManyAttendance = await getHowManyAttendance(name);
+            setAttendees(prev => {
+                 if (prev.some(att => att.name === name)) {                   
+                    return prev.map(att =>
+                        att.name === name
+                            ? { ...att, count: howManyAttendance }
+                            : att
+                        );
+                    }
+                    
+                    return [...prev, { name, count: howManyAttendance }];
+                });
+            if (howManyAttendance === 1) {
+                toast("Seja bem vindo ao grupo! Essa é a sua primeira vez conosco!")
+                return;
+            }
+            toast(`Essa é o seu ${howManyAttendance}º encontro seguido, continue assim!`)
+        } catch {
+            toast.error("Ocorreu um problema! Tente novamente");
+        }
     };
 
 

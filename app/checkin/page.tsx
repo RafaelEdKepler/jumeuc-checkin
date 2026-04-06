@@ -1,4 +1,4 @@
-import { confirmIfIsThereProgram, getAllAttendees } from "@/lib/db";
+import { AttendeeWithCount, confirmIfIsThereProgram, getAllAttendeesCheckin } from "@/lib/db";
 import CheckinClient from "./checkin-client";
 import getBibleVerse from "../../utils/get-verse";
 import { Calendar } from "../generated/prisma";
@@ -16,13 +16,13 @@ export const dynamic = "force-dynamic"
 const verseInfo = getBibleVerse();    
 
 async function CheckinPage() {
-    let attendees: string[] = [];
+    let attendees: AttendeeWithCount[] = [];
     let isThereProgramToday: Calendar | null = null;
 
     try {        
         isThereProgramToday = await confirmIfIsThereProgram(new Date());
         if (isThereProgramToday) {
-            attendees = await getAllAttendees();
+            attendees = await getAllAttendeesCheckin();
         }
     } catch (error) {
         redirect("/error")

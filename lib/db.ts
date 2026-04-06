@@ -9,31 +9,100 @@ import { AppError } from "@/utils/error-class";
 
 const timeZone = "America/Sao_Paulo";
 
-export async function getAllAttendees(): Promise<string[]> {  
-  const normalized = normalizeDate(new Date());  
+export interface AttendeeWithCount {
+  name: string,
+  count: number
+}
+
+export async function getAllAttendeesCheckin(): Promise<AttendeeWithCount[]> {
+  const normalized = normalizeDate(new Date());
+
   const startOfToday = new Date(Date.UTC(
     normalized.getUTCFullYear(),
     normalized.getUTCMonth(),
     normalized.getUTCDate(),
     0, 0, 0, 0
-  ))
+  ));
 
   const endOfToday = new Date(Date.UTC(
     normalized.getUTCFullYear(),
     normalized.getUTCMonth(),
     normalized.getUTCDate(),
     23, 59, 59, 999
-  ))
-  const response = await prisma.attendee.findMany({
-      where: { 
-          createdAt: {
-              gte: startOfToday,
-              lte: endOfToday,                
-          },
-          confirmed: true
+  ));
+  
+  const todayAttendees = await prisma.attendee.findMany({
+    where: {
+      createdAt: {
+        gte: startOfToday,
+        lte: endOfToday,
       },
+      confirmed: true,
+    },
+    select: {
+      name: true,
+    }
   });
-  return response.map((attendee: Attendee) => attendee.name);
+
+  const names = todayAttendees.map(a => a.name);
+
+  const counts = await prisma.attendee.groupBy({
+    by: ["name"],
+    where: {
+      name: { in: names },
+      confirmed: true,
+      createdAt: {
+        lte: endOfToday
+      }
+    },
+    _count: {
+      name: true
+    }
+  });
+
+  const countMap = new Map(
+    counts.map(c => [c.name, c._count.name])
+  );
+
+  return todayAttendees.map(att => ({
+    name: att.name,
+    count: countMap.get(att.name) ?? 1
+  }));
+}
+
+export async function getAllAttendees(): Promise<string[]> {  
+  const normalized = normalizeDate(new Date());  
+    const startOfToday = new Date(Date.UTC(
+      normalized.getUTCFullYear(),
+      normalized.getUTCMonth(),
+      normalized.getUTCDate(),
+      0, 0, 0, 0
+    ))
+
+    const endOfToday = new Date(Date.UTC(
+      normalized.getUTCFullYear(),
+      normalized.getUTCMonth(),
+      normalized.getUTCDate(),
+      23, 59, 59, 999
+    ))
+    const response = await prisma.attendee.findMany({
+        where: { 
+            createdAt: {
+                gte: startOfToday,
+                lte: endOfToday,                
+            },
+            confirmed: true
+        },
+    });
+    return response.map((attendee: Attendee) => attendee.name);
+}
+
+export async function getHowManyAttendance(name: string): Promise<number> {
+  return await prisma.attendee.count({
+    where: {
+      name: name      
+    }
+  })
 }
 
 export async function addAttendee(name: string) {
