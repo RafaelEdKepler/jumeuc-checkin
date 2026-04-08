@@ -1,7 +1,7 @@
 "use server"
 
 import { Attendee } from "@/app/generated/prisma";
-import { fromZonedTime } from "date-fns-tz"
+import { fromZonedTime, toZonedTime } from "date-fns-tz"
 import prisma from "./prisma";
 import { addYears, endOfDay, startOfDay, startOfYear } from "date-fns";
 import { normalizeDate, parseDate } from "@/utils/normalize-data";
@@ -30,6 +30,7 @@ export async function getAllAttendeesCheckin(): Promise<AttendeeWithCount[]> {
     normalized.getUTCDate(),
     23, 59, 59, 999
   ));
+  
   
   const todayAttendees = await prisma.attendee.findMany({
     where: {
@@ -84,7 +85,7 @@ export async function getAllAttendees(): Promise<string[]> {
       normalized.getUTCMonth(),
       normalized.getUTCDate(),
       23, 59, 59, 999
-    ))
+    ))    
     const response = await prisma.attendee.findMany({
         where: { 
             createdAt: {
@@ -98,18 +99,63 @@ export async function getAllAttendees(): Promise<string[]> {
 }
 
 export async function getHowManyAttendance(name: string): Promise<number> {
-  return await prisma.attendee.count({
+  // fim do dia de hoje (timezone seguro)
+  const today = new Date();
+  today.setHours(23, 59, 59, 999);
+
+  // todas programações até hoje
+  const programs = await prisma.calendar.findMany({
     where: {
-      name: name      
+      date: {
+        lte: today
+      }
+    },
+    orderBy: {
+      date: "desc"
+    },
+    select: {
+      date: true
     }
-  })
+  });
+
+  // presenças do usuário
+  const attendances = await prisma.attendee.findMany({
+    where: {
+      name,
+      confirmed: true
+    },
+    select: {
+      createdAt: true
+    }
+  });
+
+  // transforma presenças em Set (comparação rápida)
+  const attendanceSet = new Set(
+    attendances.map(a => normalizeDate(a.createdAt).getTime())
+  );
+
+  let streak = 0;
+
+  for (const program of programs) {
+    const programDay = normalizeDate(program.date).getTime();
+
+    if (attendanceSet.has(programDay)) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+
+  return streak;
 }
 
 export async function addAttendee(name: string) {
-    await prisma.attendee.create({
-        data: { name, createdAt: new Date() },
-    });
-    return;
+  const brazilDate = normalizeDate(new Date());
+  
+  await prisma.attendee.create({
+      data: { name, createdAt: brazilDate },
+  });
+  return;
 }
 
 export async function getAttendeesForDate(date: Date): Promise<Attendee[]> {

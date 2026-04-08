@@ -1,10 +1,8 @@
 export function normalizeDate(date: Date) {
-  return new Date(Date.UTC(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate(),
-    15, 0, 0
-  ))
+  const brazilOffset = -3;
+  return new Date(
+    date.getTime() + brazilOffset * 60 * 60 * 1000
+  );
 }
 
 export function parseDate(date: string | Date) {
