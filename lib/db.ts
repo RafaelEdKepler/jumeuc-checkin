@@ -17,19 +17,19 @@ export interface AttendeeWithCount {
 export async function getAllAttendeesCheckin(): Promise<AttendeeWithCount[]> {
   const normalized = normalizeDate(new Date());
 
-  const startOfToday = new Date(Date.UTC(
-    normalized.getUTCFullYear(),
-    normalized.getUTCMonth(),
-    normalized.getUTCDate(),
-    0, 0, 0, 0
-  ));
+const startOfToday = new Date(
+  normalized.getFullYear(),
+  normalized.getMonth(),
+  normalized.getDate(),
+  0, 0, 0, 0
+);
 
-  const endOfToday = new Date(Date.UTC(
-    normalized.getUTCFullYear(),
-    normalized.getUTCMonth(),
-    normalized.getUTCDate(),
-    23, 59, 59, 999
-  ));
+const endOfToday = new Date(
+  normalized.getFullYear(),
+  normalized.getMonth(),
+  normalized.getDate(),
+  23, 59, 59, 999
+);
   
   
   const todayAttendees = await prisma.attendee.findMany({
@@ -98,12 +98,10 @@ export async function getAllAttendees(): Promise<string[]> {
     return response.map((attendee: Attendee) => attendee.name);
 }
 
-export async function getHowManyAttendance(name: string): Promise<number> {
-  // fim do dia de hoje (timezone seguro)
+export async function getHowManyAttendance(name: string): Promise<number> {  
   const today = new Date();
   today.setHours(23, 59, 59, 999);
-
-  // todas programações até hoje
+  
   const programs = await prisma.calendar.findMany({
     where: {
       date: {
@@ -117,8 +115,7 @@ export async function getHowManyAttendance(name: string): Promise<number> {
       date: true
     }
   });
-
-  // presenças do usuário
+  
   const attendances = await prisma.attendee.findMany({
     where: {
       name,
@@ -129,7 +126,6 @@ export async function getHowManyAttendance(name: string): Promise<number> {
     }
   });
 
-  // transforma presenças em Set (comparação rápida)
   const attendanceSet = new Set(
     attendances.map(a => normalizeDate(a.createdAt).getTime())
   );
