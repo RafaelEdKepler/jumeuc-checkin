@@ -6,7 +6,7 @@ export type CalendarProp = {
 }
 
 export type RegisterClientProps = {
-    initialDates: CalendarProp[]
+    initialDates: Date[]
 }
 
 export type OptimisticCalendarActionProp = {

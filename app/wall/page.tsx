@@ -1,7 +1,7 @@
 import WallClient from "./wall-client";
 
 export const metadata = {
-    title: "Jumeuc - Paredão",
+    title: "Jumeuc - Mural",
     description: "Veja quem já chegou!"
 }
 
