@@ -3,8 +3,8 @@ import getBibleVerse from "../../utils/get-verse";
 import { Calendar } from "../generated/prisma";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import LoadingCheckin from "./loading";
 import CheckinClient from "@/features/checkin/index";
+import LoadingCheckin from "@/features/checkin/components/loading";
 
 export const metadata = {
     title: "Jumeuc - Check-in",
