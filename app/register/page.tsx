@@ -1,8 +1,9 @@
 import { Suspense } from "react"
 import RegisterClient from "./register-client"
-import { getDates } from "@/lib/db"
-import PortalServer from "@/components/portal/server"
-import { toLocalMidnight } from "@/utils/normalize-data";
+import PortalServer from "@/shared/components/portal/server"
+import { toLocalMidnight } from "@/shared/utils/normalize-data";
+import { getDates } from "@/shared/lib/db";
+
 
 export const metadata = {
     title: "Jumeuc - Liderança",

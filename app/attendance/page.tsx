@@ -1,4 +1,4 @@
-import { getMoreAttendance } from "@/lib/db";
+import { getMoreAttendance } from "@/shared/lib/db";
 import AttendanceClientPage from "./attendance-client";
 import { Suspense } from "react";
 import LoadingAttendanceClient from "./loading";

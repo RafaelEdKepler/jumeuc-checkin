@@ -2,12 +2,12 @@
 
 import { useEffect, useMemo, useState, useTransition } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { getAllAttendees, getMoreAttendance } from "@/lib/db";
-import { generateAvatar } from "@/utils/wall-utils";
+import { getAllAttendees, getMoreAttendance } from "@/shared/lib/db";
 import { TopAttendanceReturnProp } from "../attendance/types";
-import ListSkelletonComponent from "@/components/list-skelleton/list-skelleton";
-import AttendanceTableComponent from "@/components/attendance-table/attendance-table";
+import ListSkelletonComponent from "@/shared/components/list-skelleton/list-skelleton";
+import AttendanceTableComponent from "@/shared/components/attendance-table/attendance-table";
 import Image from "next/image";
+import { generateAvatar } from "@/shared/utils/wall-utils";
 
 export default function WallClient() {
     const [users, setUsers] = useState<string[]>([]);

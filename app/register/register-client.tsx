@@ -1,17 +1,17 @@
 "use client"
 
 import 'react-day-picker/style.css'
-import LayoutComponent from "@/components/layout/layout"
-import Portal from "@/components/portal/portal"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { deleteSingleData, saveSingleDate } from "@/lib/db"
+import LayoutComponent from "@/shared/components/layout/layout"
+import Portal from "@/shared/components/portal/portal"
+import { Button } from "@/shared/components/ui/button"
+import { Card } from "@/shared/components/ui/card"
+import { deleteSingleData, saveSingleDate } from "@/shared/lib/db"
 import { useOptimistic, useRef, useState, useTransition } from "react"
 import { DayPicker } from "react-day-picker"
 import { OptimisticCalendarActionProp, RegisterClientProps } from "./types"
 import { redirect } from "next/navigation"
-import { toLocalMidnight } from "../../utils/normalize-data"
 import { toast } from "sonner"
+import { toLocalMidnight } from '@/shared/utils/normalize-data'
 
 export default function RegisterClient({ initialDates }: RegisterClientProps) {
     const selectedYearRef = useRef<number>(new Date().getFullYear())

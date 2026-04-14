@@ -11,10 +11,10 @@ import {
     useSidebar
 } from "../ui/sidebar";
 
-import { menuItems } from "@/utils/menu-items";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useLeader } from "@/hooks/use-leader";
+import { menuItems } from "@/shared/utils/menu-items";
 
 export default function SidebarComponent() {
 

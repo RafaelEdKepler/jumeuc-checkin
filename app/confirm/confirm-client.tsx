@@ -1,16 +1,16 @@
 "use client"
 
-import ListConfirmComponent from "@/components/list-confirm/list-confirm";
-import LogoComponent from "@/components/logo/logo";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import ListConfirmComponent from "@/shared/components/list-confirm/list-confirm";
+import LogoComponent from "@/shared/components/logo/logo";
+import { Button } from "@/shared/components/ui/button";
+import { Card, CardContent } from "@/shared/components/ui/card";
+import { Input } from "@/shared/components/ui/input";
 import ConfirmClientProps from "./types";
 import { useState } from "react";
 import { confirmAttendeeAction } from "../../features/checkin/actions";
-import LayoutComponent from "@/components/layout/layout";
+import LayoutComponent from "@/shared/components/layout/layout";
 import { toast } from "sonner";
-import ListSkelletonComponent from "@/components/list-skelleton/list-skelleton";
+import ListSkelletonComponent from "@/shared/components/list-skelleton/list-skelleton";
 
 
 export default function ConfirmClient({ attendees, loading } : ConfirmClientProps) {

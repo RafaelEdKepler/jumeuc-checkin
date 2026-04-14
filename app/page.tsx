@@ -1,5 +1,5 @@
-import ButtonListComponent from "@/components/button-list/button-list";
-import LayoutComponent from "@/components/layout/layout";
+import ButtonListComponent from "@/shared/components/button-list/button-list";
+import LayoutComponent from "@/shared/components/layout/layout";
 
 export const metadata = {
   title: "Jumeuc Tchê",

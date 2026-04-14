@@ -1,13 +1,13 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
-import LogoComponent from "@/components/logo/logo";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import ListComponent from "@/components/list/list";
-import Portal from "@/components/portal/portal";
-import LayoutComponent from "@/components/layout/layout";
-import ListSkelletonComponent from "@/components/list-skelleton/list-skelleton";
+import { Card, CardContent } from "@/shared/components/ui/card";
+import LogoComponent from "@/shared/components/logo/logo";
+import { Input } from "@/shared/components/ui/input";
+import { Button } from "@/shared/components/ui/button";
+import ListComponent from "@/shared/components/list/list";
+import Portal from "@/shared/components/portal/portal";
+import LayoutComponent from "@/shared/components/layout/layout";
+import ListSkelletonComponent from "@/shared/components/list-skelleton/list-skelleton";
 import { CheckinClientProps } from "../types";
 import useCheckin from "../hooks/useCheckin";
 

@@ -1,4 +1,4 @@
-import { AttendeeWithCount, getHowManyAttendance } from "@/lib/db";
+import { AttendeeWithCount, getHowManyAttendance } from "@/shared/lib/db";
 import { useEffect, useOptimistic, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { checkIn } from "../actions";

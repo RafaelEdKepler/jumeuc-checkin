@@ -1,11 +1,11 @@
 "use client"
 
-import AttendanceTableComponent from "@/components/attendance-table/attendance-table"
-import LayoutComponent from "@/components/layout/layout"
-import LogoComponent from "@/components/logo/logo"
-import { Card } from "@/components/ui/card"
+import AttendanceTableComponent from "@/shared/components/attendance-table/attendance-table"
+import LayoutComponent from "@/shared/components/layout/layout"
+import LogoComponent from "@/shared/components/logo/logo"
+import { Card } from "@/shared/components/ui/card"
 import { AttendanceClientProps } from "./types"
-import ListSkelletonComponent from "@/components/list-skelleton/list-skelleton"
+import ListSkelletonComponent from "@/shared/components/list-skelleton/list-skelleton"
 
 export default function AttendanceClientPage({ topAttendants, loading } : AttendanceClientProps) {
     return (

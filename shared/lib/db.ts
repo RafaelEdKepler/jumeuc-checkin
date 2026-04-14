@@ -2,8 +2,8 @@
 
 import { Attendee } from "@/app/generated/prisma";
 import prisma from "./prisma";
-import { getUTCDayRange, normalizeBrazilDate, normalizeDate, toBrazilDayKey, toUTCDateKey } from "@/utils/normalize-data";
-import { AppError } from "@/utils/error-class";
+import { getUTCDayRange, normalizeDate, toBrazilDayKey, toUTCDateKey } from "@/shared/utils/normalize-data";
+import { AppError } from "@/shared/utils/error-class";
 
 export interface AttendeeWithCount {
   name: string,

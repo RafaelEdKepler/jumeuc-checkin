@@ -1,7 +1,7 @@
-import { getAttendeesForDate } from "@/lib/db";
+import { getAttendeesForDate } from "@/shared/lib/db";
 import ConfirmClient from "./confirm-client";
 import { Suspense } from "react";
-import Portal from "@/components/portal/portal";
+import Portal from "@/shared/components/portal/portal";
 import LoadingConfirmClient from "./loading";
 
 export const metadata = {
