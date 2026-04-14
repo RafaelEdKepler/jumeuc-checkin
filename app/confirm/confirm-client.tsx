@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import ConfirmClientProps from "./types";
 import { useState } from "react";
-import { confirmAttendeeAction } from "../checkin/actions";
+import { confirmAttendeeAction } from "../../features/checkin/actions";
 import LayoutComponent from "@/components/layout/layout";
 import { toast } from "sonner";
 import ListSkelletonComponent from "@/components/list-skelleton/list-skelleton";

@@ -6,7 +6,7 @@ import LogoComponent from "@/components/logo/logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ListComponent from "@/components/list/list";
-import { checkIn } from "./actions";
+import { checkIn } from "../../features/checkin/actions";
 import { CheckinClientProps } from "./types";
 import Portal from "@/components/portal/portal";
 import LayoutComponent from "@/components/layout/layout";
