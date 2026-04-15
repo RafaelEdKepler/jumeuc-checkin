@@ -3,7 +3,7 @@ import { confirmAttendeeAction } from "@/features/checkin/actions";
 import { useState } from "react";
 import { toast } from "sonner";
 import { getAttendeesForDate } from "../services/get-attendees-for-date";
-import SplitPresentsAndNotPresents from "../services/split-presents-not-presents";
+import SplitPresentsAndNotPresents from "../utils/split-presents-not-presents";
 
 export default function useConfirm(attendees: Attendee[]) {
     const [attendeesList, setAttendeesList] = useState(attendees);

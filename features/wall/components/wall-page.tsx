@@ -28,7 +28,7 @@ export default function WallClient() {
 
             <div className="w-full h-screen relative">
                 {userPositions && userPositions.map((user) => (                    
-                    <WallAttendee user={user} />
+                    <WallAttendee key={user.name} user={user} />
                 ))}
             </div>
         </div>
