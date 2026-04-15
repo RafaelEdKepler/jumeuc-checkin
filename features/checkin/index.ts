@@ -1,3 +1,3 @@
-import CheckinPage from "./components/CheckinPage";
+import CheckinPage from "./components/checkin-page";
 
 export default CheckinPage;

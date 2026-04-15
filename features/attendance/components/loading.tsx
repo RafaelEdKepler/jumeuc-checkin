@@ -1,4 +1,5 @@
-import AttendanceClientPage from "./attendance-client";
+import AttendanceClientPage from "./attendance-page";
+
 
 export default function LoadingAttendanceClient() {
     return (

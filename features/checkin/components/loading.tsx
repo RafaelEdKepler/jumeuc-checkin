@@ -1,4 +1,4 @@
-import CheckinClient from "./CheckinPage";
+import CheckinClient from "./checkin-page";
 
 export default function LoadingCheckin({ verseInfo } : { verseInfo : string }) {
     return (

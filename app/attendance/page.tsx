@@ -1,7 +1,7 @@
 import { getMoreAttendance } from "@/shared/lib/db";
-import AttendanceClientPage from "./attendance-client";
 import { Suspense } from "react";
-import LoadingAttendanceClient from "./loading";
+import LoadingAttendanceClient from "@/features/attendance/components/loading";
+import AttendanceClientPage from "@/features/attendance";
 
 export const metadata = {
     title: "Jumeuc - Lista de Mais Assíduos",

@@ -4,7 +4,7 @@ import AttendanceTableComponent from "@/shared/components/attendance-table/atten
 import LayoutComponent from "@/shared/components/layout/layout"
 import LogoComponent from "@/shared/components/logo/logo"
 import { Card } from "@/shared/components/ui/card"
-import { AttendanceClientProps } from "./types"
+import { AttendanceClientProps } from "../types"
 import ListSkelletonComponent from "@/shared/components/list-skelleton/list-skelleton"
 
 export default function AttendanceClientPage({ topAttendants, loading } : AttendanceClientProps) {
