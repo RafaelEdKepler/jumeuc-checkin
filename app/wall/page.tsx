@@ -1,4 +1,4 @@
-import WallClient from "./wall-client";
+import WallClient from "@/features/wall/components/wall-page"
 
 export const metadata = {
     title: "Jumeuc - Mural",
