@@ -1,5 +1,5 @@
 
-import { BibleBook } from '@/types/types';
+import { BibleBook } from '@/shared/types/types';
 import rawBible from '../lib/nvi.json'
 
 export function getDailySeed() {

@@ -1,6 +1,6 @@
 "use client"
 
-import { useDialog } from "@/hooks/use-dialog";
+import { useDialog } from "@/shared/hooks/use-dialog";
 import {
     Sidebar,
     SidebarContent,
@@ -13,7 +13,7 @@ import {
 
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useLeader } from "@/hooks/use-leader";
+import { useLeader } from "@/shared/hooks/use-leader";
 import { menuItems } from "@/shared/utils/menu-items";
 
 export default function SidebarComponent() {

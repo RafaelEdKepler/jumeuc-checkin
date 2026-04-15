@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { Card, CardContent } from "../ui/card";
-import { menuItems } from "@/utils/menu-items";
-import { useDialog } from "@/hooks/use-dialog";
-import { useLeader } from "@/hooks/use-leader";
+import { menuItems } from "@/shared/utils/menu-items";
+import { useDialog } from "@/shared/hooks/use-dialog";
+import { useLeader } from "@/shared/hooks/use-leader";
 
 export default function ButtonListComponent() {
     

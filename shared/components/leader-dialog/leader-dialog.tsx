@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
-import { useDialog } from "@/hooks/use-dialog";
+import { useDialog } from "@/shared/hooks/use-dialog";
 import PasswordInputComponent from "../password-input/password-input";
-import { useLeader } from "@/hooks/use-leader";
+import { useLeader } from "@/shared/hooks/use-leader";
 
 export default function LeaderDialog() {
     const [password, setPassword] = useState<string>("");
