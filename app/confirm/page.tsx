@@ -1,8 +1,7 @@
 import { getAttendeesForDate } from "@/shared/lib/db";
-import ConfirmClient from "./confirm-client";
 import { Suspense } from "react";
-import Portal from "@/shared/components/portal/portal";
-import LoadingConfirmClient from "./loading";
+import LoadingConfirmClient from "../../features/confirm/components/loading";
+import ConfirmClient from "@/features/confirm/components/confirm-page";
 
 export const metadata = {
     title: "Jumeuc - Liderança",

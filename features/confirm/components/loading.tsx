@@ -1,4 +1,4 @@
-import ConfirmClient from "./confirm-client";
+import ConfirmClient from "./confirm-page";
 
 export default function LoadingConfirmClient() {
     return (
