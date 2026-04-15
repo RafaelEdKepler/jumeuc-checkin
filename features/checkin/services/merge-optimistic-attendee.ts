@@ -1,4 +1,4 @@
-import { AttendeeWithCount } from "@/shared/lib/db";
+import { AttendeeWithCount } from "@/shared/types/types";
 
 export function mergeOptimisticAttendee(
   state: AttendeeWithCount[],

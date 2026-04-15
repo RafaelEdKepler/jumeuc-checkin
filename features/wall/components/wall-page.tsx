@@ -1,6 +1,5 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import { generateAvatar } from "@/shared/utils/wall-utils";
 import useWall from "../hooks/use-wall";
 import WallContent from "./wall-content";
 import WallAttendee from "./wall-attendee";

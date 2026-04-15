@@ -2,8 +2,8 @@ import { useOptimistic, useRef, useState, useTransition } from "react";
 import { OptimisticCalendarActionProp } from "../types";
 import { redirect } from "next/navigation";
 import { toLocalMidnight } from "@/shared/utils/normalize-data";
-import { deleteSingleData, saveSingleDate } from "@/shared/lib/db";
 import { toast } from "sonner";
+import { deleteSingleData, saveSingleDate } from "@/shared/services/calendar.service";
 
 export default function useRegister( initialDates : Date[]) {
     const selectedYearRef = useRef<number>(new Date().getFullYear())

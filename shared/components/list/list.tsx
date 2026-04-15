@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import FrequencyBadgeComponent from "../frequency-badge/frequency-badge";
-import { AttendeeWithCount } from "@/shared/lib/db";
 import getEmoji from "@/shared/utils/get-emoji";
+import { AttendeeWithCount } from "@/shared/types/types";
 
 export default function ListComponent({ attendees }: { attendees: AttendeeWithCount[] }) {
     return (

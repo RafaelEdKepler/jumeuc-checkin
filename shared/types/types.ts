@@ -10,3 +10,8 @@ export type TopAttendanceReturnProp = {
     percentual: string,
     count: number
 }
+
+export interface AttendeeWithCount {
+  name: string,
+  count: number
+}

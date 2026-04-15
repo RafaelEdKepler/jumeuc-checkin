@@ -1,10 +1,12 @@
-import { AttendeeWithCount, confirmIfIsThereProgram, getAllAttendeesCheckin } from "@/shared/lib/db";
 import { Calendar } from "../generated/prisma";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import CheckinClient from "@/features/checkin/index";
 import LoadingCheckin from "@/features/checkin/components/loading";
 import getBibleVerse from "@/shared/utils/get-verse";
+import { AttendeeWithCount } from "@/shared/types/types";
+import { confirmIfIsThereProgram } from "@/shared/services/calendar.service";
+import { getAllAttendeesCheckin } from "@/shared/services/attendee.service";
 
 export const metadata = {
     title: "Jumeuc - Check-in",

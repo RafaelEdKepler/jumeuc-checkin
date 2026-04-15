@@ -1,6 +1,6 @@
 "use server";
 
-import { addAttendee, confirmAttendee } from "@/shared/lib/db";
+import { addAttendee, confirmAttendee } from "@/shared/services/attendee.service";
 import { revalidatePath } from "next/cache";
 
 export async function checkIn(formData: FormData) {

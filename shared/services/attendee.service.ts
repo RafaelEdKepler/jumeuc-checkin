@@ -1,14 +1,10 @@
 "use server"
 
 import { Attendee } from "@/app/generated/prisma";
-import prisma from "./prisma";
-import { getUTCDayRange, normalizeDate, toBrazilDayKey, toUTCDateKey } from "@/shared/utils/normalize-data";
-import { AppError } from "@/shared/utils/error-class";
-
-export interface AttendeeWithCount {
-  name: string,
-  count: number
-}
+import prisma from "../lib/prisma";
+import { AttendeeWithCount } from "../types/types";
+import { getUTCDayRange, toBrazilDayKey, toUTCDateKey } from "../utils/normalize-data";
+import { AppError } from "../utils/error-class";
 
 export async function getAllAttendeesCheckin(): Promise<AttendeeWithCount[]> {
   const { start, end } = getUTCDayRange(new Date());
@@ -152,91 +148,4 @@ export async function confirmAttendee(confirmed: number[], notConfirmed: number[
       throw new AppError(`Error on confirm attendees - ${err}`, 400)
     }
 
-}
-
-export async function getDates(year: number) {
-  const start = new Date(Date.UTC(year, 0, 1));
-  const end = new Date(Date.UTC(year + 1, 0, 1));
-
-  return await prisma.calendar.findMany({
-    where: {
-      date: {
-        gte: start,
-        lt: end
-      }
-    }
-  });
-}
-
-export async function saveDates(dates: Date[]) {
-  await prisma.calendar.createMany({
-    data: dates.map((date) => ({
-      date: normalizeDate(date),
-    })),
-  })
-}
-
-export async function saveSingleDate(date: Date) {
-  await prisma.calendar.create({
-    data: {
-      date: normalizeDate(date)
-    }
-  })
-}
-
-export async function deleteSingleData(date: Date) {  
-
-  await prisma.calendar.delete({
-    where: {
-      date: normalizeDate(date),
-    }
-  })
-}
-
-export const confirmIfIsThereProgram = async (date: Date) => {
-  const normalized = normalizeDate(date);
-
-  return await prisma.calendar.findFirst({
-    where: {
-      date: normalized
-    }
-  })
-}
-
-export const getMoreAttendance = async () => {
-  const newDate = new Date();
-  const actualYear = newDate.getFullYear();
-  const allProgramsResponse = await prisma.calendar.count({
-    where: {
-      date: {
-        gte: new Date(`${actualYear}-01-01`),
-        lte: new Date()
-      }
-    }
-  });
-  const attendeeResponse = await prisma.attendee.groupBy({
-    by: ['name'],
-    where: {
-      confirmed: true,
-      createdAt: {
-        gte: new Date(`${actualYear}-01-01`),
-        lte: new Date()
-      }
-    },
-    _count: {
-      name: true
-    },    
-    orderBy: {
-      _count: {
-        name: 'desc'
-      }
-    },
-    take: 10
-  })
-  return attendeeResponse.map((attendee, index) => ({
-    position: index + 1,
-    name: attendee.name,
-    count: attendee._count.name,
-    percentual: (attendee._count.name * 100 / allProgramsResponse).toFixed(0)
-  }))
 }

@@ -1,4 +1,3 @@
-import { AttendeeWithCount, getHowManyAttendance } from "@/shared/lib/db";
 import { useEffect, useOptimistic, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { checkIn } from "../actions";
@@ -7,6 +6,8 @@ import { updateAttendees } from "../services/update-attendees";
 import { mergeOptimisticAttendee } from "../services/merge-optimistic-attendee";
 import { getAttendanceMessage } from "../services/get-attendance-message";
 import { STORAGE_KEYS } from "@/shared/constants/enums";
+import { AttendeeWithCount } from "@/shared/types/types";
+import { getHowManyAttendance } from "@/shared/services/attendee.service";
 
 export default function useCheckin({ initialAttendees } : UseCheckinProps) {
     const [storedNames, setStoredNames] = useState<string[]>([]);
