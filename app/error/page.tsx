@@ -1,4 +1,4 @@
-import ErrorClient from "./error-client";
+import ErrorClient from "@/features/error/error-page";
 
 export default function ErrorPage() {
     return (
