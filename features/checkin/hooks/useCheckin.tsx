@@ -6,6 +6,7 @@ import { UseCheckinProps } from "../types";
 import { updateAttendees } from "../services/update-attendees";
 import { mergeOptimisticAttendee } from "../services/merge-optimistic-attendee";
 import { getAttendanceMessage } from "../services/get-attendance-message";
+import { STORAGE_KEYS } from "@/shared/constants/enums";
 
 export default function useCheckin({ initialAttendees } : UseCheckinProps) {
     const [storedNames, setStoredNames] = useState<string[]>([]);
@@ -24,7 +25,7 @@ export default function useCheckin({ initialAttendees } : UseCheckinProps) {
             setStoredNames(prev => {
                 if (prev.includes(name)) return prev;
                 const updated = [...prev, name];
-                localStorage.setItem("@checkin/names", JSON.stringify(updated));
+                localStorage.setItem(STORAGE_KEYS.CHECKIN_NAMES, JSON.stringify(updated));
                 return updated;
             });
     
@@ -41,7 +42,7 @@ export default function useCheckin({ initialAttendees } : UseCheckinProps) {
 
 
     useEffect(() => {
-        const saved = localStorage.getItem("@checkin/names");
+        const saved = localStorage.getItem(STORAGE_KEYS.CHECKIN_NAMES);
         if (saved) {
             setStoredNames(JSON.parse(saved));
         }

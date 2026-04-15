@@ -2,6 +2,7 @@
 
 import { create,  } from "zustand"
 import { persist } from "zustand/middleware"
+import { STORAGE_KEYS } from "../constants/enums"
 
 type LeaderProp = {
     isLeader: boolean,
@@ -15,7 +16,7 @@ export const useLeader = create<LeaderProp>()(
       setIsLeader: () => set({ isLeader: true })
     }),
     {
-      name: "@jumeuctche/leader"
+      name: STORAGE_KEYS.LEADER
     }
   )
 )

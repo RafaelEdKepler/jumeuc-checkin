@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { useDialog } from "@/shared/hooks/use-dialog";
 import PasswordInputComponent from "../password-input/password-input";
 import { useLeader } from "@/shared/hooks/use-leader";
+import { STORAGE_KEYS } from "@/shared/constants/enums";
 
 export default function LeaderDialog() {
     const [password, setPassword] = useState<string>("");
@@ -14,7 +15,7 @@ export default function LeaderDialog() {
 
     const handleConfirmPassword = () => {
         if (password === process.env.NEXT_PUBLIC_LEADER_PASSWORD) {
-            localStorage.setItem("@jumeuctche/leader", "true");
+            localStorage.setItem(STORAGE_KEYS.LEADER, "true");
             setIsLeader();
         }
         handleCloseDialog();
