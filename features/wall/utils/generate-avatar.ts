@@ -1,4 +1,4 @@
-import { getDailySeed } from "./get-verse";
+import { getDailySeed } from "../../../shared/utils/get-verse";
 
 const styles = [
     "adventurer",

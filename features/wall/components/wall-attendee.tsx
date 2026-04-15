@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { UserPositionProp } from "../types";
-import { generateAvatar } from "@/shared/utils/wall-utils";
+import { generateAvatar } from "@/features/wall/utils/generate-avatar";
 
 export default function WallAttendee({ user } : UserPositionProp) {
     return (
