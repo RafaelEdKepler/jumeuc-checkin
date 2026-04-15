@@ -1,19 +1,11 @@
-"use client"
+import { useOptimistic, useRef, useState, useTransition } from "react";
+import { OptimisticCalendarActionProp } from "../types";
+import { redirect } from "next/navigation";
+import { toLocalMidnight } from "@/shared/utils/normalize-data";
+import { deleteSingleData, saveSingleDate } from "@/shared/lib/db";
+import { toast } from "sonner";
 
-import 'react-day-picker/style.css'
-import LayoutComponent from "@/shared/components/layout/layout"
-import Portal from "@/shared/components/portal/portal"
-import { Button } from "@/shared/components/ui/button"
-import { Card } from "@/shared/components/ui/card"
-import { deleteSingleData, saveSingleDate } from "@/shared/lib/db"
-import { useOptimistic, useRef, useState, useTransition } from "react"
-import { DayPicker } from "react-day-picker"
-import { OptimisticCalendarActionProp, RegisterClientProps } from "./types"
-import { redirect } from "next/navigation"
-import { toast } from "sonner"
-import { toLocalMidnight } from '@/shared/utils/normalize-data'
-
-export default function RegisterClient({ initialDates }: RegisterClientProps) {
+export default function useRegister( initialDates : Date[]) {
     const selectedYearRef = useRef<number>(new Date().getFullYear())
     const months = Array.from({ length: 12 }, (_, i) => i);
     const [isPending, startTransition] = useTransition();
@@ -66,25 +58,12 @@ export default function RegisterClient({ initialDates }: RegisterClientProps) {
         })
     };
 
-    return (
-        <LayoutComponent>
-            {isPending && <Portal />}
-            <Card className="w-19/20 h-full relative">
-                <Button className="absolute top-4 right-4" onClick={() => handleButtonClick()}>Voltar</Button>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    {months.map(month => (
-                        <div key={`${selectedYearRef.current}-${month}`} className="p-2 m-2 flex justify-center align-middle items-center">
-                            <DayPicker
-                                month={new Date(selectedYearRef.current, month)}
-                                mode="multiple"
-                                selected={optimisticDates}
-                                onDayClick={handleSelectOrUnselectData}
-                                animate
-                            />
-                        </div>
-                    ))}
-                </div>
-            </Card>
-        </LayoutComponent>
-    )
+    return {
+        selectedYearRef,
+        months,
+        isPending,
+        handleButtonClick,
+        handleSelectOrUnselectData,
+        optimisticDates
+    }
 }

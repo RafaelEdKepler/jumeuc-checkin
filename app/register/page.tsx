@@ -1,8 +1,8 @@
 import { Suspense } from "react"
-import RegisterClient from "./register-client"
 import PortalServer from "@/shared/components/portal/server"
 import { toLocalMidnight } from "@/shared/utils/normalize-data";
 import { getDates } from "@/shared/lib/db";
+import RegisterClient from "@/features/register/components/register-page";
 
 
 export const metadata = {
