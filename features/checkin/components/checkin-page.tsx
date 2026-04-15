@@ -9,7 +9,7 @@ import Portal from "@/shared/components/portal/portal";
 import LayoutComponent from "@/shared/components/layout/layout";
 import ListSkelletonComponent from "@/shared/components/list-skelleton/list-skelleton";
 import { CheckinClientProps } from "../types";
-import useCheckin from "../hooks/useCheckin";
+import useCheckin from "../hooks/use-checkin";
 
 export default function CheckinClient({ initialAttendees, loading, verse, isThereProgramToday }: CheckinClientProps) {    
     
