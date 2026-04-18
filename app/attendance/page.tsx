@@ -2,7 +2,7 @@
 import { Suspense } from "react";
 import LoadingAttendanceClient from "@/features/attendance/components/loading";
 import AttendanceClientPage from "@/features/attendance";
-import { getMoreAttendance } from "@/shared/services/wall.service";
+import { getMoreAttendance } from "@/server/services/wall.service";
 
 export const metadata = {
     title: "Jumeuc - Lista de Mais Assíduos",
