@@ -31,7 +31,7 @@ async function CheckinPage() {
     }
 
     return (
-        <CheckinClient initialAttendees={attendees} loading={false} verse={verseInfo} isThereProgramToday={!!isThereProgramToday}/>
+        <CheckinClient initialAttendees={attendees} loading={false} verse={verseInfo} isThereProgramToday={true}/>
     )
 }
 
