@@ -1,7 +1,7 @@
 "use server"
 
-import prisma from "../lib/prisma";
-import { normalizeDate } from "../utils/normalize-data";
+import prisma from "../../shared/lib/prisma";
+import { normalizeDate } from "../../shared/utils/normalize-data";
 
 export async function getDates(year: number) {
   const start = new Date(Date.UTC(year, 0, 1));

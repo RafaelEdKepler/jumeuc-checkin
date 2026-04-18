@@ -1,10 +1,10 @@
 "use server"
 
 import { Attendee } from "@/app/generated/prisma";
-import prisma from "../lib/prisma";
-import { AttendeeWithCount } from "../types/types";
-import { getUTCDayRange, toBrazilDayKey, toUTCDateKey } from "../utils/normalize-data";
-import { AppError } from "../utils/error-class";
+import prisma from "../../shared/lib/prisma";
+import { AttendeeWithCount } from "../../shared/types/types";
+import { getUTCDayRange, toBrazilDayKey, toUTCDateKey } from "../../shared/utils/normalize-data";
+import { AppError } from "../../shared/utils/error-class";
 
 export async function getAllAttendeesCheckin(): Promise<AttendeeWithCount[]> {
   const { start, end } = getUTCDayRange(new Date());

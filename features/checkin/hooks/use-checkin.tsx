@@ -7,7 +7,7 @@ import { mergeOptimisticAttendee } from "../utils/merge-optimistic-attendee";
 import { getAttendanceMessage } from "../utils/get-attendance-message";
 import { STORAGE_KEYS } from "@/shared/constants/enums";
 import { AttendeeWithCount } from "@/shared/types/types";
-import { getHowManyAttendance } from "@/shared/services/attendee.service";
+import { getHowManyAttendance } from "@/server/services/attendee.service";
 
 export default function useCheckin({ initialAttendees } : UseCheckinProps) {
     const [storedNames, setStoredNames] = useState<string[]>([]);

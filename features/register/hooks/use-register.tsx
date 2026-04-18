@@ -3,7 +3,7 @@ import { OptimisticCalendarActionProp } from "../types";
 import { redirect } from "next/navigation";
 import { toLocalMidnight } from "@/shared/utils/normalize-data";
 import { toast } from "sonner";
-import { deleteSingleData, saveSingleDate } from "@/shared/services/calendar.service";
+import { deleteSingleData, saveSingleDate } from "@/server/services/calendar.service";
 
 export default function useRegister( initialDates : Date[]) {
     const selectedYearRef = useRef<number>(new Date().getFullYear())

@@ -1,8 +1,8 @@
 import { TopAttendanceReturnProp } from "@/shared/types/types";
 import { useEffect, useMemo, useState, useTransition } from "react";
 import SetUserPositions from "../utils/set-user-positions";
-import { getAllAttendees } from "@/shared/services/attendee.service";
-import { getMoreAttendance } from "@/shared/services/wall.service";
+import { getAllAttendees } from "@/server/services/attendee.service";
+import { getMoreAttendance } from "@/server/services/wall.service";
 
 export default function useWall() {
     const [users, setUsers] = useState<string[]>([]);
