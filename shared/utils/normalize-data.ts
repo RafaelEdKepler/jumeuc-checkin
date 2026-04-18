@@ -70,3 +70,12 @@ export function toUTCDateKey(date: Date) {
 
   return `${y}-${m}-${d}`;
 }
+
+export function normalizeDateBugFix(date: Date) {
+  return new Date(Date.UTC(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    0, 0, 0, 0
+  ));
+}

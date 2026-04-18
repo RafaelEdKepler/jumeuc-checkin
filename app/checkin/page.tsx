@@ -22,8 +22,8 @@ async function CheckinPage() {
     let isThereProgramToday: Calendar | null = null;
 
     try {        
-        isThereProgramToday = await confirmIfIsThereProgram(new Date());
-        if (isThereProgramToday) {
+        // isThereProgramToday = await confirmIfIsThereProgram(new Date());
+        if (true) {
             attendees = await getAllAttendeesCheckin();
         }
     } catch (error) {
