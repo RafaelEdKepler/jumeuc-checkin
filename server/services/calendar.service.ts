@@ -45,9 +45,26 @@ export async function deleteSingleData(date: Date) {
 export const confirmIfIsThereProgram = async (date: Date) => {
   const normalized = normalizeDate(date);
 
+  const start = new Date(Date.UTC(
+    normalized.getUTCFullYear(),
+    normalized.getUTCMonth(),
+    normalized.getUTCDate(),
+    0,0,0,0
+  ));
+
+  const end = new Date(Date.UTC(
+    normalized.getUTCFullYear(),
+    normalized.getUTCMonth(),
+    normalized.getUTCDate() + 1,
+    0,0,0,0
+  ));
+
   return await prisma.calendar.findFirst({
     where: {
-      date: normalized
+      date: {
+        gte: start,
+        lt: end
+      }
     }
-  })
-}
+  });
+};
