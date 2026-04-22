@@ -1,32 +1,24 @@
+import { formatInTimeZone, toDate } from "date-fns-tz";
+
 export function normalizeDate(date: Date) {
-  return new Date(Date.UTC(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate(),
-    0, 0, 0, 0
-  ));
+  const brazilOffset = -3;
+  return new Date(
+    date.getTime() + brazilOffset * 60 * 60 * 1000
+  );
 }
 
 export function getUTCDayRange(date: Date) {
-  const start = new Date(Date.UTC(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate(),
-    0, 0, 0, 0
-  ));
+  const start = toDate(formatInTimeZone(date, 'America/Sao_Paulo', 'yyyy-MM-dd'));
+  console.log(start)
+  // start.setHours(0, 0, 0, 0);
+  
+  const end = toDate(formatInTimeZone(date, 'America/Sao_Paulo', 'yyyy-MM-dd'));
+  // end.setHours(0, 0, 0, 0);
+  end.setDate(date.getUTCDate() + 1)
 
-  const end = new Date(Date.UTC(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate(),
-    23, 59, 59, 999
-  ));
+  console.log(start, end)
 
   return { start, end };
-}
-
-export function isSameDayUTC(a: Date, b: Date) {
-  return normalizeDate(a).getTime() === normalizeDate(b).getTime();
 }
 
 export function toLocalMidnight(date: Date) {
@@ -36,19 +28,6 @@ export function toLocalMidnight(date: Date) {
     date.getUTCDate(),
     0, 0, 0, 0
   );
-}
-
-export function normalizeBrazilDate(date: Date) {
-  const brazil = new Date(
-    date.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
-  );
-
-  return new Date(Date.UTC(
-    brazil.getFullYear(),
-    brazil.getMonth(),
-    brazil.getDate(),
-    0, 0, 0, 0
-  ));
 }
 
 export function toBrazilDayKey(date: Date) {
@@ -69,13 +48,4 @@ export function toUTCDateKey(date: Date) {
   const d = String(date.getUTCDate()).padStart(2, "0");
 
   return `${y}-${m}-${d}`;
-}
-
-export function normalizeDateBugFix(date: Date) {
-  return new Date(Date.UTC(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate(),
-    0, 0, 0, 0
-  ));
 }

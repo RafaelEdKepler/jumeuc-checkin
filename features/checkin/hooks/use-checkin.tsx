@@ -31,7 +31,7 @@ export default function useCheckin({ initialAttendees } : UseCheckinProps) {
             });
     
             try {
-                await checkIn(formData);
+                await checkIn(formData, new Date());
                 const howManyAttendance = await getHowManyAttendance(name);
                 setAttendees(prev => updateAttendees(prev, name, howManyAttendance));
                 toast(getAttendanceMessage(howManyAttendance))

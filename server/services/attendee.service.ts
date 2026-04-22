@@ -3,7 +3,7 @@
 import { Attendee } from "@/app/generated/prisma";
 import prisma from "../../shared/lib/prisma";
 import { AttendeeWithCount } from "../../shared/types/types";
-import { getUTCDayRange, toBrazilDayKey, toUTCDateKey } from "../../shared/utils/normalize-data";
+import { getUTCDayRange, normalizeDate, toBrazilDayKey, toUTCDateKey } from "../../shared/utils/normalize-data";
 import { AppError } from "../../shared/utils/error-class";
 
 export async function getAllAttendeesCheckin(): Promise<AttendeeWithCount[]> {
@@ -83,7 +83,7 @@ export async function getHowManyAttendance(name: string): Promise<number> {
     select: {
       createdAt: true
     }
-  });
+  });  
 
   const attendanceSet = new Set(
     attendances.map(a => toBrazilDayKey(a.createdAt))
@@ -104,31 +104,27 @@ export async function getHowManyAttendance(name: string): Promise<number> {
   return streak;
 }
 
-export async function addAttendee(name: string) {
+export async function addAttendee(name: string, date: Date) {
   await prisma.attendee.create({
     data: { 
       name, 
-      createdAt: new Date()
+      createdAt: normalizeDate(date)
     },
   });
 }
 
 export async function getAttendeesForDate(date: Date): Promise<Attendee[]> {
-  const { start, end } = getUTCDayRange(date);
+  const {start, end} = getUTCDayRange(date);
 
-  try {
-    return await prisma.attendee.findMany({
-      where: {
-        createdAt: {
-          gte: start,
-          lte: end,
-        }
-      },
-      orderBy: { createdAt: "asc" },
-    });
-  } catch (err) {
-    throw new AppError(`Error on get Attendees by date - ${err}`, 400)
-  }
+  return prisma.attendee.findMany({
+    where: {
+      createdAt: {
+        gte: start,
+        lte: end,
+      }
+    },
+    orderBy: { createdAt: "asc" },
+  });
 }
 
 export async function confirmAttendee(confirmed: number[], notConfirmed: number[]) {

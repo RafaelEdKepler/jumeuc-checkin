@@ -2,7 +2,7 @@ import { Attendee } from "@/app/generated/prisma";
 import { confirmAttendeeAction } from "@/features/checkin/actions";
 import { useState } from "react";
 import { toast } from "sonner";
-import { getAttendeesForDate } from "../services/get-attendees-for-date";
+import { getAttendeesForDateService } from "../services/get-attendees-for-date";
 import SplitPresentsAndNotPresents from "../utils/split-presents-not-presents";
 
 export default function useConfirm(attendees: Attendee[]) {
@@ -29,7 +29,7 @@ export default function useConfirm(attendees: Attendee[]) {
 
     const handleGetAttendeesForDate = async (formData: FormData) => {        
         const date = formData.get("date") as string;
-        const attendeesFounded = await getAttendeesForDate(date);
+        const attendeesFounded = await getAttendeesForDateService(date);
         try {
             if (attendeesFounded) {
                 setAttendeesList(attendeesFounded);

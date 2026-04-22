@@ -3,12 +3,12 @@
 import { addAttendee, confirmAttendee } from "@/server/services/attendee.service";
 import { revalidatePath } from "next/cache";
 
-export async function checkIn(formData: FormData) {
+export async function checkIn(formData: FormData, date: Date) {
   const name = formData.get("name") as string;
 
   if (!name) return;
 
-  await addAttendee(name);
+  await addAttendee(name, date);
 
   revalidatePath("/checkin");
 }

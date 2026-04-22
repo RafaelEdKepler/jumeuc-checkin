@@ -1,7 +1,7 @@
 "use server"
 
 import prisma from "../../shared/lib/prisma";
-import { normalizeDate } from "../../shared/utils/normalize-data";
+import { getUTCDayRange, normalizeDate } from "../../shared/utils/normalize-data";
 
 export async function getDates(year: number) {
   const start = new Date(Date.UTC(year, 0, 1));
@@ -44,20 +44,7 @@ export async function deleteSingleData(date: Date) {
 
 export const confirmIfIsThereProgram = async (date: Date) => {
   const normalized = normalizeDate(date);
-
-  const start = new Date(Date.UTC(
-    normalized.getUTCFullYear(),
-    normalized.getUTCMonth(),
-    normalized.getUTCDate(),
-    0,0,0,0
-  ));
-
-  const end = new Date(Date.UTC(
-    normalized.getUTCFullYear(),
-    normalized.getUTCMonth(),
-    normalized.getUTCDate() + 1,
-    0,0,0,0
-  ));
+  const {start, end} = getUTCDayRange(normalized);
 
   return await prisma.calendar.findFirst({
     where: {
