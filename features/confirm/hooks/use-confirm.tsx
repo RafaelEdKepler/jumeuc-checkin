@@ -1,9 +1,11 @@
 import { Attendee } from "@/app/generated/prisma";
 import { confirmAttendeeAction } from "@/features/checkin/actions";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { toast } from "sonner";
 import { getAttendeesForDateService } from "../services/get-attendees-for-date";
 import SplitPresentsAndNotPresents from "../utils/split-presents-not-presents";
+import { STORAGE_KEYS } from "@/shared/constants/enums";
+import { redirect } from "next/navigation";
 
 export default function useConfirm(attendees: Attendee[]) {
   const [attendeesList, setAttendeesList] = useState(attendees);
@@ -41,6 +43,13 @@ export default function useConfirm(attendees: Attendee[]) {
       console.error("Error fetching attendees for date:", err);
     }
   };
+
+  useLayoutEffect(() => {
+    const leader = localStorage.getItem(STORAGE_KEYS.LEADER);
+    if (!leader) {
+      redirect("/");
+    }
+  }, []);
 
   return {
     handleConfirmAttendance,

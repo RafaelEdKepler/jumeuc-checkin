@@ -1,4 +1,10 @@
-import { useOptimistic, useRef, useState, useTransition } from "react";
+import {
+  useLayoutEffect,
+  useOptimistic,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import { OptimisticCalendarActionProp } from "../types";
 import { redirect } from "next/navigation";
 import { toLocalMidnight } from "@/shared/utils/normalize-data";
@@ -7,6 +13,7 @@ import {
   deleteSingleData,
   saveSingleDate,
 } from "@/server/services/calendar.service";
+import { STORAGE_KEYS } from "@/shared/constants/enums";
 
 export default function useRegister(initialDates: Date[]) {
   const selectedYearRef = useRef<number>(new Date().getFullYear());
@@ -66,6 +73,13 @@ export default function useRegister(initialDates: Date[]) {
       }
     });
   };
+
+  useLayoutEffect(() => {
+    const leader = localStorage.getItem(STORAGE_KEYS.LEADER);
+    if (!leader) {
+      redirect("/");
+    }
+  }, []);
 
   return {
     selectedYearRef,
