@@ -9,14 +9,9 @@ export function normalizeDate(date: Date) {
 
 export function getUTCDayRange(date: Date) {
   const start = toDate(formatInTimeZone(date, 'America/Sao_Paulo', 'yyyy-MM-dd'));
-  console.log(start)
-  // start.setHours(0, 0, 0, 0);
   
   const end = toDate(formatInTimeZone(date, 'America/Sao_Paulo', 'yyyy-MM-dd'));
-  // end.setHours(0, 0, 0, 0);
   end.setDate(date.getUTCDate() + 1)
-
-  console.log(start, end)
 
   return { start, end };
 }

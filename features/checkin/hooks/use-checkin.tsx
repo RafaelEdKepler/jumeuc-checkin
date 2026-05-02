@@ -1,4 +1,4 @@
-import { useEffect, useOptimistic, useState, useTransition } from "react";
+import { useLayoutEffect, useOptimistic, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { checkIn } from "../actions";
 import { UseCheckinProps } from "../types";
@@ -8,11 +8,13 @@ import { getAttendanceMessage } from "../utils/get-attendance-message";
 import { STORAGE_KEYS } from "@/shared/constants/enums";
 import { AttendeeWithCount } from "@/shared/types/types";
 import { getHowManyAttendance } from "@/server/services/attendee.service";
+import verifyRedundance from "../utils/verify-redundance";
 
 export default function useCheckin({ initialAttendees } : UseCheckinProps) {
     const [storedNames, setStoredNames] = useState<string[]>([]);
     const [attendees, setAttendees] = useState<AttendeeWithCount[]>(initialAttendees)
     const [isPending, startTransition] = useTransition();
+    const [selectedTab, setSelectedTab] = useState<string>("newName")
     const [optimisticAttendees, addOptimisticAttendees] =
     useOptimistic(attendees, mergeOptimisticAttendee);
 
@@ -21,31 +23,36 @@ export default function useCheckin({ initialAttendees } : UseCheckinProps) {
             const name = formData.get("name") as string;
             if (!name) return;
     
-            addOptimisticAttendees({name, count: 1});
-            
-            setStoredNames(prev => {
-                if (prev.includes(name)) return prev;
-                const updated = [...prev, name];
-                localStorage.setItem(STORAGE_KEYS.CHECKIN_NAMES, JSON.stringify(updated));
-                return updated;
-            });
-    
-            try {
-                await checkIn(formData, new Date());
-                const howManyAttendance = await getHowManyAttendance(name);
-                setAttendees(prev => updateAttendees(prev, name, howManyAttendance));
-                toast(getAttendanceMessage(howManyAttendance))
-            } catch {
-                toast.error("Ocorreu um problema! Tente novamente");
+            if (!verifyRedundance(attendees, name)) {
+                addOptimisticAttendees({name, count: 1});
+                
+                setStoredNames(prev => {
+                    if (prev.includes(name)) return prev;
+                    const updated = [...prev, name];
+                    localStorage.setItem(STORAGE_KEYS.CHECKIN_NAMES, JSON.stringify(updated));
+                    return updated;
+                });
+        
+                try {
+                    await checkIn(formData, new Date());
+                    const howManyAttendance = await getHowManyAttendance(name);
+                    setAttendees(prev => updateAttendees(prev, name, howManyAttendance));
+                    toast(getAttendanceMessage(howManyAttendance))
+                } catch {
+                    toast.error("Ocorreu um problema! Tente novamente");
+                }
+            } else {
+                toast.error("Esse nome já está na lista!")
             }
         })
     };
 
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const saved = localStorage.getItem(STORAGE_KEYS.CHECKIN_NAMES);
         if (saved) {
             setStoredNames(JSON.parse(saved));
+            setSelectedTab("storedNames")
         }
     }, []);
 
@@ -53,6 +60,8 @@ export default function useCheckin({ initialAttendees } : UseCheckinProps) {
         storedNames,
         isPending,
         optimisticAttendees,
-        handleCheckIn,        
+        handleCheckIn,
+        setSelectedTab,
+        selectedTab
     }
 }

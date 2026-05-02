@@ -10,3 +10,16 @@ export type CheckinClientProps = {
 export type UseCheckinProps = {
     initialAttendees: AttendeeWithCount[];
 }
+
+export type TabsCheckinComponentProps = {
+    storedNames: string[],
+    loading: boolean,
+    selectedTab: string,
+    setSelectedTab: (selectedTab: string) => void
+}
+
+export type FormFieldsComponentProps = {
+    storedNames: string[],
+    loading: boolean,
+    disabled: boolean
+}
