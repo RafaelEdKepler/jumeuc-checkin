@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import prisma from "../../shared/lib/prisma";
 
@@ -9,33 +9,33 @@ export const getMoreAttendance = async () => {
     where: {
       date: {
         gte: new Date(`${actualYear}-01-01`),
-        lte: new Date()
-      }
-    }
+        lte: new Date(),
+      },
+    },
   });
   const attendeeResponse = await prisma.attendee.groupBy({
-    by: ['name'],
+    by: ["name"],
     where: {
       confirmed: true,
       createdAt: {
         gte: new Date(`${actualYear}-01-01`),
-        lte: new Date()
-      }
+        lte: new Date(),
+      },
     },
     _count: {
-      name: true
-    },    
+      name: true,
+    },
     orderBy: {
       _count: {
-        name: 'desc'
-      }
+        name: "desc",
+      },
     },
-    take: 10
-  })
+    take: 10,
+  });
   return attendeeResponse.map((attendee, index) => ({
     position: index + 1,
     name: attendee.name,
     count: attendee._count.name,
-    percentual: (attendee._count.name * 100 / allProgramsResponse).toFixed(0)
-  }))
-}
+    percentual: ((attendee._count.name * 100) / allProgramsResponse).toFixed(0),
+  }));
+};

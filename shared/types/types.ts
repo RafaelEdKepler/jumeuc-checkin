@@ -5,13 +5,13 @@ export type BibleBook = {
 };
 
 export type TopAttendanceReturnProp = {
-    name: string,
-    position: number,
-    percentual: string,
-    count: number
-}
+  name: string;
+  position: number;
+  percentual: string;
+  count: number;
+};
 
 export interface AttendeeWithCount {
-  name: string,
-  count: number
+  name: string;
+  count: number;
 }

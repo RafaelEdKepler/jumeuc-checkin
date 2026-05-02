@@ -1,6 +1,5 @@
-
-import { BibleBook } from '@/shared/types/types';
-import rawBible from '../lib/nvi.json'
+import { BibleBook } from "@/shared/types/types";
+import rawBible from "../lib/nvi.json";
 
 export function getDailySeed() {
   const now = new Date();
@@ -15,25 +14,22 @@ function seededRandom(seed: number) {
   return x - Math.floor(x);
 }
 
-export default function getBibleVerse() : string {        
+export default function getBibleVerse(): string {
   const bible = rawBible as BibleBook[];
-    const seed = getDailySeed();
+  const seed = getDailySeed();
 
   const bookIndex = Math.floor(seededRandom(seed) * bible.length);
   const book = bible[bookIndex];
 
   const chapterIndex = Math.floor(
-    seededRandom(seed + 1) * book.chapters.length
+    seededRandom(seed + 1) * book.chapters.length,
   );
 
   const chapter = book.chapters[chapterIndex];
 
-  const verseIndex = Math.floor(
-    seededRandom(seed + 2) * chapter.length
-  );
+  const verseIndex = Math.floor(seededRandom(seed + 2) * chapter.length);
 
   const verse = chapter[verseIndex];
 
   return `${book.abbrev.toUpperCase()} ${chapterIndex + 1}:${verseIndex + 1} - ${verse}`;
-
 }

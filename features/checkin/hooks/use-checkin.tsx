@@ -10,58 +10,65 @@ import { AttendeeWithCount } from "@/shared/types/types";
 import { getHowManyAttendance } from "@/server/services/attendee.service";
 import verifyRedundance from "../utils/verify-redundance";
 
-export default function useCheckin({ initialAttendees } : UseCheckinProps) {
-    const [storedNames, setStoredNames] = useState<string[]>([]);
-    const [attendees, setAttendees] = useState<AttendeeWithCount[]>(initialAttendees)
-    const [isPending, startTransition] = useTransition();
-    const [selectedTab, setSelectedTab] = useState<string>("newName")
-    const [optimisticAttendees, addOptimisticAttendees] =
-    useOptimistic(attendees, mergeOptimisticAttendee);
+export default function useCheckin({ initialAttendees }: UseCheckinProps) {
+  const [storedNames, setStoredNames] = useState<string[]>([]);
+  const [attendees, setAttendees] =
+    useState<AttendeeWithCount[]>(initialAttendees);
+  const [isPending, startTransition] = useTransition();
+  const [selectedTab, setSelectedTab] = useState<string>("newName");
+  const [optimisticAttendees, addOptimisticAttendees] = useOptimistic(
+    attendees,
+    mergeOptimisticAttendee,
+  );
 
-    const handleCheckIn = async (formData: FormData) => {
-        startTransition(async () => {
-            const name = formData.get("name") as string;
-            if (!name) return;
-    
-            if (!verifyRedundance(attendees, name)) {
-                addOptimisticAttendees({name, count: 1});
-                
-                setStoredNames(prev => {
-                    if (prev.includes(name)) return prev;
-                    const updated = [...prev, name];
-                    localStorage.setItem(STORAGE_KEYS.CHECKIN_NAMES, JSON.stringify(updated));
-                    return updated;
-                });
-        
-                try {
-                    await checkIn(formData, new Date());
-                    const howManyAttendance = await getHowManyAttendance(name);
-                    setAttendees(prev => updateAttendees(prev, name, howManyAttendance));
-                    toast(getAttendanceMessage(howManyAttendance))
-                } catch {
-                    toast.error("Ocorreu um problema! Tente novamente");
-                }
-            } else {
-                toast.error("Esse nome já está na lista!")
-            }
-        })
-    };
+  const handleCheckIn = async (formData: FormData) => {
+    startTransition(async () => {
+      const name = formData.get("name") as string;
+      if (!name) return;
 
+      if (!verifyRedundance(attendees, name)) {
+        addOptimisticAttendees({ name, count: 1 });
 
-    useLayoutEffect(() => {
-        const saved = localStorage.getItem(STORAGE_KEYS.CHECKIN_NAMES);
-        if (saved) {
-            setStoredNames(JSON.parse(saved));
-            setSelectedTab("storedNames")
+        setStoredNames((prev) => {
+          if (prev.includes(name)) return prev;
+          const updated = [...prev, name];
+          localStorage.setItem(
+            STORAGE_KEYS.CHECKIN_NAMES,
+            JSON.stringify(updated),
+          );
+          return updated;
+        });
+
+        try {
+          await checkIn(formData, new Date());
+          const howManyAttendance = await getHowManyAttendance(name);
+          setAttendees((prev) =>
+            updateAttendees(prev, name, howManyAttendance),
+          );
+          toast(getAttendanceMessage(howManyAttendance));
+        } catch {
+          toast.error("Ocorreu um problema! Tente novamente");
         }
-    }, []);
+      } else {
+        toast.error("Esse nome já está na lista!");
+      }
+    });
+  };
 
-    return {
-        storedNames,
-        isPending,
-        optimisticAttendees,
-        handleCheckIn,
-        setSelectedTab,
-        selectedTab
+  useLayoutEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEYS.CHECKIN_NAMES);
+    if (saved) {
+      setStoredNames(JSON.parse(saved));
+      setSelectedTab("storedNames");
     }
+  }, []);
+
+  return {
+    storedNames,
+    isPending,
+    optimisticAttendees,
+    handleCheckIn,
+    setSelectedTab,
+    selectedTab,
+  };
 }

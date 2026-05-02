@@ -1,4 +1,4 @@
-export interface InfocheckinProps { 
-    verse?: string,
-    isThereProgramToday?: boolean
+export interface InfocheckinProps {
+  verse?: string;
+  isThereProgramToday?: boolean;
 }

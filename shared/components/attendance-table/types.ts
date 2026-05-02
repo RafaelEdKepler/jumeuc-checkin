@@ -1,5 +1,5 @@
-import { TopAttendanceReturnProp } from "@/shared/types/types"
+import { TopAttendanceReturnProp } from "@/shared/types/types";
 
 export type AttendanceTableProp = {
-    topAttendants: Array<TopAttendanceReturnProp>
-}
+  topAttendants: Array<TopAttendanceReturnProp>;
+};

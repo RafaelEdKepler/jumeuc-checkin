@@ -1,6 +1,9 @@
 "use server";
 
-import { addAttendee, confirmAttendee } from "@/server/services/attendee.service";
+import {
+  addAttendee,
+  confirmAttendee,
+} from "@/server/services/attendee.service";
 import { revalidatePath } from "next/cache";
 
 export async function checkIn(formData: FormData, date: Date) {
@@ -13,7 +16,10 @@ export async function checkIn(formData: FormData, date: Date) {
   revalidatePath("/checkin");
 }
 
-export async function confirmAttendeeAction(confirmed : number[], notConfirmed : number[]) {
-  await confirmAttendee(confirmed, notConfirmed)
+export async function confirmAttendeeAction(
+  confirmed: number[],
+  notConfirmed: number[],
+) {
+  await confirmAttendee(confirmed, notConfirmed);
   revalidatePath("/confirm");
 }

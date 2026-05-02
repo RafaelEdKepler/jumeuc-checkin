@@ -3,11 +3,10 @@ import LayoutComponent from "@/shared/components/layout/layout";
 
 export const metadata = {
   title: "Jumeuc Tchê",
-  description: "Painel de gerenciamento"
-}
+  description: "Painel de gerenciamento",
+};
 
 export default function Home() {
-
   return (
     <LayoutComponent>
       <div className="min-h-screen p-6">

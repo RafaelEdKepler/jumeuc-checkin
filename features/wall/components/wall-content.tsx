@@ -4,20 +4,20 @@ import WallLogo from "./wall-logo";
 import WallQRCode from "./wall-qrcode";
 import { WallContentProps } from "../types";
 
-export default function WallContent({isWhatVisible, isPending, mostAttendance} : WallContentProps) {
-    return (
-        <>
-            {isWhatVisible === 1 && (
-                <WallLogo />
-            )}
+export default function WallContent({
+  isWhatVisible,
+  isPending,
+  mostAttendance,
+}: WallContentProps) {
+  return (
+    <>
+      {isWhatVisible === 1 && <WallLogo />}
 
-            {isWhatVisible === 0 && (
-                <WallQRCode />
-            )}
+      {isWhatVisible === 0 && <WallQRCode />}
 
-            {isWhatVisible === 2 && (
-                <WallList isPending={isPending} mostAttendance={mostAttendance} />
-            )}
-        </>
-    )
+      {isWhatVisible === 2 && (
+        <WallList isPending={isPending} mostAttendance={mostAttendance} />
+      )}
+    </>
+  );
 }

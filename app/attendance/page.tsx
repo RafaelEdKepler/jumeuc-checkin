@@ -1,29 +1,25 @@
-
 import { Suspense } from "react";
 import LoadingAttendanceClient from "@/features/attendance/components/loading";
 import AttendanceClientPage from "@/features/attendance";
 import { getMoreAttendance } from "@/server/services/wall.service";
 
 export const metadata = {
-    title: "Jumeuc - Lista de Mais Assíduos",
-    description: "Veja em que posição você está!"
-}
+  title: "Jumeuc - Lista de Mais Assíduos",
+  description: "Veja em que posição você está!",
+};
 
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
 
 async function Attendance() {
-    
-    const topAttendees = await getMoreAttendance();    
-    
-    return (
-        <AttendanceClientPage topAttendants={topAttendees} loading={false}/>
-    )
+  const topAttendees = await getMoreAttendance();
+
+  return <AttendanceClientPage topAttendants={topAttendees} loading={false} />;
 }
 
 export default async function AttendancePage() {
-    return (
-        <Suspense fallback={<LoadingAttendanceClient />}>
-            <Attendance />
-        </Suspense>
-    )
+  return (
+    <Suspense fallback={<LoadingAttendanceClient />}>
+      <Attendance />
+    </Suspense>
+  );
 }

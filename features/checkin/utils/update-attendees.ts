@@ -3,14 +3,12 @@ import { AttendeeWithCount } from "@/shared/types/types";
 export function updateAttendees(
   prev: AttendeeWithCount[],
   name: string,
-  count: number
+  count: number,
 ): AttendeeWithCount[] {
-  const exists = prev.some(att => att.name === name);
+  const exists = prev.some((att) => att.name === name);
 
   if (exists) {
-    return prev.map(att =>
-      att.name === name ? { ...att, count } : att
-    );
+    return prev.map((att) => (att.name === name ? { ...att, count } : att));
   }
 
   return [...prev, { name, count }];

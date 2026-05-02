@@ -1,3 +1,3 @@
 export type LeaderDialogProps = {
-    isDialogOpen: boolean
-}
+  isDialogOpen: boolean;
+};

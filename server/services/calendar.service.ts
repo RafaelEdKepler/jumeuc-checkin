@@ -1,7 +1,10 @@
-"use server"
+"use server";
 
 import prisma from "../../shared/lib/prisma";
-import { getUTCDayRange, normalizeDate } from "../../shared/utils/normalize-data";
+import {
+  getUTCDayRange,
+  normalizeDate,
+} from "../../shared/utils/normalize-data";
 
 export async function getDates(year: number) {
   const start = new Date(Date.UTC(year, 0, 1));
@@ -11,9 +14,9 @@ export async function getDates(year: number) {
     where: {
       date: {
         gte: start,
-        lt: end
-      }
-    }
+        lt: end,
+      },
+    },
   });
 }
 
@@ -22,36 +25,35 @@ export async function saveDates(dates: Date[]) {
     data: dates.map((date) => ({
       date: normalizeDate(date),
     })),
-  })
+  });
 }
 
 export async function saveSingleDate(date: Date) {
   await prisma.calendar.create({
     data: {
-      date: normalizeDate(date)
-    }
-  })
+      date: normalizeDate(date),
+    },
+  });
 }
 
-export async function deleteSingleData(date: Date) {  
-
+export async function deleteSingleData(date: Date) {
   await prisma.calendar.delete({
     where: {
       date: normalizeDate(date),
-    }
-  })
+    },
+  });
 }
 
 export const confirmIfIsThereProgram = async (date: Date) => {
   const normalized = normalizeDate(date);
-  const {start, end} = getUTCDayRange(normalized);
+  const { start, end } = getUTCDayRange(normalized);
 
   return await prisma.calendar.findFirst({
     where: {
       date: {
         gte: start,
-        lt: end
-      }
-    }
+        lt: end,
+      },
+    },
   });
 };

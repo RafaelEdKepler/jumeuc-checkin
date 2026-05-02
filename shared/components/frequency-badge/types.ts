@@ -1,3 +1,3 @@
 export type FrequencyBadgeType = {
-    emoji: string
-}
+  emoji: string;
+};

@@ -56,56 +56,55 @@ Apenas cálculo determinístico.
 
 ├── app/
 
-│   ├── checkin/
+│ ├── checkin/
 
-│   ├── utils/
+│ ├── utils/
 
-│   └── layout.tsx
+│ └── layout.tsx
 
 ├── lib/
 
-│   ├── prisma.ts
+│ ├── prisma.ts
 
-│   └── nvi.json
+│ └── nvi.json
 
 ├── types/
 
 ├── prisma/
 
-│   └── schema.prisma
+│ └── schema.prisma
 
 └── README.md
-
 
 ⚙️ Instalação
 
 1️⃣ Clone o repositório
 
-``git clone https://github.com/seu-usuario/jumeuc-checkin.git
-cd jumeuc-checkin``
+`git clone https://github.com/seu-usuario/jumeuc-checkin.git
+cd jumeuc-checkin`
 
 2️⃣ Instale as dependências
 
-``npm install``
+`npm install`
 
 ou
 
-``pnpm install``
+`pnpm install`
 
 3️⃣ Configure as variáveis de ambiente
 
 Crie um arquivo .env:
 
-``DATABASE_URL="sua-url-do-neon"``
+`DATABASE_URL="sua-url-do-neon"`
 
 4️⃣ Execute as migrations
 
-``npx prisma migrate dev``
-``npx prisma generate``
+`npx prisma migrate dev`
+`npx prisma generate`
 
 5️⃣ Rode o projeto
 
-``npm run dev``
+`npm run dev`
 
 Acesse: http://localhost:3000
 
@@ -119,9 +118,9 @@ Acesse: http://localhost:3000
 
 🚀 Próximas Evoluções
 
- - Métricas de presença;
- - Autenticação por perfil de Liderança;
- - Histórico de eventos
+- Métricas de presença;
+- Autenticação por perfil de Liderança;
+- Histórico de eventos
 
 📜 Licença
 

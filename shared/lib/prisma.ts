@@ -1,4 +1,3 @@
-
 import { PrismaClient } from "@/app/generated/prisma";
 import { PrismaPg } from "@prisma/adapter-pg";
 

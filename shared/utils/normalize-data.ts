@@ -2,16 +2,16 @@ import { formatInTimeZone, toDate } from "date-fns-tz";
 
 export function normalizeDate(date: Date) {
   const brazilOffset = -3;
-  return new Date(
-    date.getTime() + brazilOffset * 60 * 60 * 1000
-  );
+  return new Date(date.getTime() + brazilOffset * 60 * 60 * 1000);
 }
 
 export function getUTCDayRange(date: Date) {
-  const start = toDate(formatInTimeZone(date, 'America/Sao_Paulo', 'yyyy-MM-dd'));
-  
-  const end = toDate(formatInTimeZone(date, 'America/Sao_Paulo', 'yyyy-MM-dd'));
-  end.setDate(date.getUTCDate() + 1)
+  const start = toDate(
+    formatInTimeZone(date, "America/Sao_Paulo", "yyyy-MM-dd"),
+  );
+
+  const end = toDate(formatInTimeZone(date, "America/Sao_Paulo", "yyyy-MM-dd"));
+  end.setDate(date.getUTCDate() + 1);
 
   return { start, end };
 }
@@ -21,13 +21,16 @@ export function toLocalMidnight(date: Date) {
     date.getUTCFullYear(),
     date.getUTCMonth(),
     date.getUTCDate(),
-    0, 0, 0, 0
+    0,
+    0,
+    0,
+    0,
   );
 }
 
 export function toBrazilDayKey(date: Date) {
   const brazil = new Date(
-    date.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
+    date.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }),
   );
 
   const y = brazil.getFullYear();
