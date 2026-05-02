@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,jsx,json,css,md}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
@@ -39,7 +45,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
-    "prettier": "3.8.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.3",
     "shadcn": "^3.8.5",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
