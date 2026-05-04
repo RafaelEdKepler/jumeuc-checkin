@@ -36,7 +36,7 @@ export default function useWall() {
     };
     const fetchAttendees = async () => {
       const attendance = await getMoreAttendance();
-      setMostAttendance(attendance);
+      setMostAttendance(attendance.data);
     };
 
     const interval = setInterval(fetchUsers, 2000);
