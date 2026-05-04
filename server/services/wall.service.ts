@@ -2,7 +2,9 @@
 
 import prisma from "../../shared/lib/prisma";
 
-export const getMoreAttendance = async () => {
+const PAGE_SIZE = 10;
+
+export const getMoreAttendance = async (page = 0) => {
   const newDate = new Date();
   const actualYear = newDate.getFullYear();
   const allProgramsResponse = await prisma.calendar.count({
@@ -25,17 +27,24 @@ export const getMoreAttendance = async () => {
     _count: {
       name: true,
     },
-    orderBy: {
-      _count: {
-        name: "desc",
-      },
-    },
-    take: 10,
+    orderBy: [{ _count: { name: "desc" } }, { name: "asc" }],
+    take: PAGE_SIZE + 1,
+    skip: page * PAGE_SIZE,
   });
-  return attendeeResponse.map((attendee, index) => ({
-    position: index + 1,
-    name: attendee.name,
-    count: attendee._count.name,
-    percentual: ((attendee._count.name * 100) / allProgramsResponse).toFixed(0),
-  }));
+
+  const hasMore = attendeeResponse.length > PAGE_SIZE;
+
+  const sliced = attendeeResponse.slice(0, PAGE_SIZE);
+
+  return {
+    data: sliced.map((attendee, index) => ({
+      position: page * PAGE_SIZE + index + 1,
+      name: attendee.name,
+      count: attendee._count.name,
+      percentual: ((attendee._count.name * 100) / allProgramsResponse).toFixed(
+        0,
+      ),
+    })),
+    hasMore,
+  };
 };

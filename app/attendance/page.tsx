@@ -13,7 +13,9 @@ export const dynamic = "force-dynamic";
 async function Attendance() {
   const topAttendees = await getMoreAttendance();
 
-  return <AttendanceClientPage topAttendants={topAttendees} loading={false} />;
+  return (
+    <AttendanceClientPage topAttendants={topAttendees.data} loading={false} />
+  );
 }
 
 export default async function AttendancePage() {

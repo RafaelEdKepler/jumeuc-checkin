@@ -12,25 +12,28 @@ export default function AttendanceTableComponent({
   topAttendants,
 }: AttendanceTableProp) {
   return (
-    <Table>
-      <TableCaption>Os mais assíduos da JUMEUC! 🔥</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Posição</TableHead>
-          <TableHead>Nome</TableHead>
-          <TableHead>Quantia de vezes</TableHead>
-          <TableHead>Percentual</TableHead>
-        </TableRow>
-        {topAttendants &&
-          topAttendants.map((attendant) => (
-            <TableRow key={attendant.position}>
-              <TableCell>{attendant.position}º</TableCell>
-              <TableCell>{attendant.name}</TableCell>
-              <TableCell>{attendant.count}</TableCell>
-              <TableCell>{attendant.percentual}%</TableCell>
-            </TableRow>
-          ))}
-      </TableHeader>
-    </Table>
+    <>
+      <Table className="table-fixed w-full">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-8 lg:w-auto">🏆</TableHead>
+            <TableHead className="w-25 lg:w-auto">Nome</TableHead>
+            <TableHead>Presenças</TableHead>
+            <TableHead>Percentual</TableHead>
+          </TableRow>
+          {topAttendants &&
+            topAttendants.map((attendant) => (
+              <TableRow key={attendant.position}>
+                <TableCell>{attendant.position}º</TableCell>
+                <TableCell className="w-10 lg:w-auto overflow-hidden text-ellipsis whitespace-nowrap">
+                  {attendant.name}
+                </TableCell>
+                <TableCell>{attendant.count}</TableCell>
+                <TableCell>{attendant.percentual}%</TableCell>
+              </TableRow>
+            ))}
+        </TableHeader>
+      </Table>
+    </>
   );
 }
